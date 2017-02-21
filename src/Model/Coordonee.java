@@ -23,6 +23,8 @@ public class Coordonee {
 
     public Coordonee() {
         this.piece = false;
+        this.x = 0;
+        this.y =0;
     }
 
     /**

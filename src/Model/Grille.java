@@ -8,22 +8,22 @@ import com.sun.javafx.geom.Vec2d;
  */
 public class Grille {
 
-    private int x;
-    private int y;
+    private int longueur;
+    private int hauteur;
     private Case[][] cases;
     private static int nbrePiece;
 
     /**
      * Constructeur de la grille
-     * @param x longueur
-     * @param y hauteur
+     * @param longueur
+     * @param hauteur
      */
-    public Grille(int x, int y) {
-        this.x = x;
-        this.y = y;
-        this.cases = new Case[x][y];
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; j++) {
+    public Grille(int longueur, int hauteur) {
+        this.longueur = longueur;
+        this.hauteur = hauteur;
+        this.cases = new Case[longueur][hauteur];
+        for (int i = 0; i < longueur; i++) {
+            for (int j = 0; j < hauteur; j++) {
                 //On crée une case avec l'indice correpondant
                 cases[i][j] = new Case(new Coordonee(i, j));
             }
@@ -34,14 +34,14 @@ public class Grille {
      * @return x longueur
      */
     public int getX() {
-        return x;
+        return longueur;
     }
 
     /**
      * @return y hauteur
      */
     public int getY() {
-        return y;
+        return hauteur;
     }
 
     /**

@@ -19,26 +19,41 @@ import java.security.Key;
 public class VueGrille extends Parent {
     private Grille grille;
     GridPane gridPane;
+    private GrilleControler controler;
 
     public VueGrille(double Xpos, double Ypos){
         //Initialisation de la grille
         gridPane = new GridPane();
 
         //Controller de la grille
-        GrilleControler grilleControler = new GrilleControler();
-        Grille grille = grilleControler.getGrille();
+        controler = new GrilleControler();
+        controler.setVueGrille(this);
 
-        //Recuperation de la longeur de la grille
+        //Récupération de la grille
+        grille = controler.getGrille();
+
+        //Recuperation de la longueur de la grille
         int longueur = grille.getX();
 
         //recuperation de la hauteur de la grille
         int hauteur = grille.getY();
 
-        //Definit les contrainte des lignes
-        for(int i =0; i<longueur; i++){
+        System.out.println("hauteur: "+hauteur+" et longueur: "+ longueur);
+        //Definit les contraintes des lignes
+
+
+        for(int i=0; i<hauteur; i++){
             RowConstraints rowConstraints = new RowConstraints(VueCase.getLenght());
+            rowConstraints.setFillHeight(true);
+            rowConstraints.setVgrow(Priority.ALWAYS);
             gridPane.getRowConstraints().add(rowConstraints);
 
+        }
+        for(int j =0; j<longueur ;j++){
+            ColumnConstraints columnConstraints = new ColumnConstraints(VueCase.getLenght());
+            columnConstraints.setFillWidth(true);
+            columnConstraints.setHgrow(Priority.ALWAYS);
+            gridPane.getColumnConstraints().add(columnConstraints);
         }
 
         //Rend visible les lignes de la grille
@@ -57,25 +72,20 @@ public class VueGrille extends Parent {
 
         //Ajout de la grille
         this.getChildren().add(gridPane);
-        grilleControler.setVueGrille(this);
+    }
 
-        //Gestion des actions du clavier
-        this.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                switch (event.getCode()){
-                    case RIGHT:
-                        grilleControler.movePiece(Direction.DROITE);
-                        break;
-                    case LEFT:
-                        grilleControler.movePiece(Direction.GAUCHE);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
+    /**
+     * @return GrilleControler
+     */
+    public GrilleControler getControler() {
+        return controler;
+    }
 
+    /**
+     * @return grille
+     */
+    public Grille getGrille() {
+        return grille;
     }
 
     /**

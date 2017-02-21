@@ -16,9 +16,14 @@ public class Main extends Application {
         VuePlateau vuePlateau = new VuePlateau();
         int longueur = vuePlateau.getLongueur();
         int largeur = vuePlateau.getLargeur();
+
+        //VuePiece vuePiece = new VuePiece(new Piece(TypePiece.Tetrimino_I));
+        Scene root = new Scene(vuePlateau, longueur, largeur);
+
+        //Ajout de la gestion d'évènement clavier a la scene
+        //root.setOnKeyPressed(vuePiece.getOnKeyPressed());
         primaryStage.setTitle("Hello World");
-        VuePiece vuePiece = new VuePiece(new Piece(TypePiece.Tetrimino_I));
-        primaryStage.setScene(new Scene(vuePiece, longueur, largeur));
+        primaryStage.setScene(root);
         primaryStage.show();
     }
 

@@ -1,5 +1,6 @@
 package View;
 
+import Controler.PlateauController;
 import Model.TypePiece;
 import javafx.scene.Parent;
 import javafx.scene.paint.Color;
@@ -18,8 +19,10 @@ import javafx.scene.text.TextAlignment;
 public class VuePlateau extends Parent{
     int longueur;
     int hauteur;
-    Text titre;
-    Rectangle fond_plateau;
+    private Text titre;
+    private Rectangle fond_plateau;
+    private VueGrille vueGrille;
+    private PlateauController controller;
 
     /**
      * Constructeur VuePlateau
@@ -28,9 +31,16 @@ public class VuePlateau extends Parent{
         //determination de la longueur de la fenêtre
         longueur = 600;
         hauteur = 600;
+
         creationFond();
         creationTitre(TypeJeu.Tetris);
         creationGrille();
+
+
+
+        //Attribution des controlers
+        controller.setGrilleControler(vueGrille.getControler());
+
     }
 
     /**
@@ -64,10 +74,10 @@ public class VuePlateau extends Parent{
     public void creationGrille(){
         double XposGrille = hauteur/3;
         double YposGrille = longueur/4;
-        VueGrille vueGrille = new VueGrille(XposGrille,YposGrille);
+        vueGrille = new VueGrille(XposGrille,YposGrille);
         this.getChildren().add(vueGrille);
         //Permet de faire fonctionner la gestion du clavier dans la classe VueGrille
-        vueGrille.setFocusTraversable(true);
+//        vueGrille.setFocusTraversable(true);
     }
 
 
@@ -83,5 +93,12 @@ public class VuePlateau extends Parent{
      */
     public int getLargeur() {
         return hauteur;
+    }
+
+    /**
+     * @return vueGrille
+     */
+    public VueGrille getVueGrille() {
+        return vueGrille;
     }
 }

@@ -46,7 +46,9 @@ public class Piece implements moveAble{
     }
 
 
-    public Piece(){}
+    public Piece(){
+        this.coordonee =new Coordonee();
+    }
 
     /**
      * Creer la piece selon son type
@@ -105,6 +107,7 @@ public class Piece implements moveAble{
      * @param typePiece type de la Piece
      */
     public Piece(TypePiece typePiece) {
+        this();
         setTypePiece(typePiece);
     }
 

@@ -21,13 +21,6 @@ public class GrilleControler {
      */
     public GrilleControler() {
         grille = new Grille(10,20);
-        pieceControler = new PieceControler(TypePiece.Tetrimino_J);
-        piece = pieceControler.getPiece();
-        piece.setCoordonee(new Coordonee(0,0));
-        putPiece();
-        //pieces = new ArrayList<Piece>();
-        //pieces.add(piece);
-
     }
 
     public Piece getPiece() {

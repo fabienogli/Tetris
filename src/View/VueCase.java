@@ -19,12 +19,11 @@ public class VueCase extends Parent{
         return lenght;
     }
 
-    private static int lenght;
+    private static int lenght = 15;
 
 
 
     public VueCase(Case aCase){
-        lenght = 15;
         this.aCase = aCase;
         this.apparence = new Rectangle(lenght,lenght,Color.WHITE);
         this.apparence.setStroke(Color.BLACK);
@@ -33,7 +32,6 @@ public class VueCase extends Parent{
     }
 
     public VueCase(Case aCase, Color color){
-        lenght = 15;
         this.aCase = aCase;
         this.apparence = new Rectangle(lenght,lenght,color);
         this.apparence.setStroke(Color.BLACK);
