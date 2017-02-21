@@ -1,6 +1,7 @@
 package Model;
 
 /**
+ * Enumeration des Pieces du Tetris
  * Created by Fabien on 14/02/2017.
  */
 public enum TypePiece {

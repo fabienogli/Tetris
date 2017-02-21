@@ -6,6 +6,7 @@ import Model.TypePiece;
 import javafx.event.EventHandler;
 
 /**
+ * Controlleur de la Piece
  * Created by Fabien on 18/02/2017.
  */
 public class PieceControler {

@@ -13,53 +13,74 @@ import javafx.scene.shape.Rectangle;
 import java.security.Key;
 
 /**
+ * Vue de la grille
  * Created by Fabien on 14/02/2017.
  */
 public class VueGrille extends Parent {
     private Grille grille;
-    private Piece piece;
     GridPane gridPane;
 
     public VueGrille(double Xpos, double Ypos){
+        //Initialisation de la grille
         gridPane = new GridPane();
-        VueCase vueCase = new VueCase(new Case());
 
+        //Controller de la grille
         GrilleControler grilleControler = new GrilleControler();
         Grille grille = grilleControler.getGrille();
-        int colonne = grille.getY();
-        int ligne = grille.getX();
-        for(int i =0; i<ligne; i++){
+
+        //Recuperation de la longeur de la grille
+        int longueur = grille.getX();
+
+        //recuperation de la hauteur de la grille
+        int hauteur = grille.getY();
+
+        //Definit les contrainte des lignes
+        for(int i =0; i<longueur; i++){
             RowConstraints rowConstraints = new RowConstraints(VueCase.getLenght());
             gridPane.getRowConstraints().add(rowConstraints);
 
         }
 
+        //Rend visible les lignes de la grille
         gridPane.setGridLinesVisible(true);
-        for(int i=0; i<ligne;i++){
-            for(int j=0; j<colonne;j++){
+
+        //Ajout de VueCase dans la grille
+        for(int i=0; i<longueur;i++){
+            for(int j=0; j<hauteur;j++){
                 gridPane.add(new VueCase(grille.getCase(i,j)),i,j);
             }
         }
+
+        //Determine la position de la grille
         this.gridPane.setTranslateX(Xpos);
         this.gridPane.setTranslateY(Ypos);
+
+        //Ajout de la grille
         this.getChildren().add(gridPane);
+        grilleControler.setVueGrille(this);
+
+        //Gestion des actions du clavier
         this.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 switch (event.getCode()){
                     case RIGHT:
-                        piece.move(Direction.DROITE);
+                        grilleControler.movePiece(Direction.DROITE);
                         break;
                     case LEFT:
-                        piece.move(Direction.GAUCHE);
+                        grilleControler.movePiece(Direction.GAUCHE);
                         break;
                     default:
                         break;
                 }
             }
         });
+
     }
 
+    /**
+     * @return gridPane Représentation graphique de la grille
+     */
     public GridPane getGridPane() {
         return gridPane;
     }

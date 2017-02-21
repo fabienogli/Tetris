@@ -26,28 +26,20 @@ public class VueCase extends Parent{
     public VueCase(Case aCase){
         lenght = 15;
         this.aCase = aCase;
-        remplirPalette();
-        this.apparence = new Rectangle(lenght,lenght,Color.RED);
-        if(aCase.getActif()){
-            this.apparence.setFill(palette[choixCouleur()]);
-        }
-        else this.apparence.setFill(Color.WHITE);
+        this.apparence = new Rectangle(lenght,lenght,Color.WHITE);
         this.apparence.setStroke(Color.BLACK);
+
         this.getChildren().add(this.apparence);
     }
 
-    public void remplirPalette(){
-        palette = new Color[nbCouleur];
-        palette[0] = Color.CYAN;
-        palette[1] = Color.BLUE;
-        palette[2] = Color.ORANGE;
-        palette[3] = Color.LIME;
-        palette[4] = Color.PURPLE;
-        palette[5] = Color.RED;
+    public VueCase(Case aCase, Color color){
+        lenght = 15;
+        this.aCase = aCase;
+        this.apparence = new Rectangle(lenght,lenght,color);
+        this.apparence.setStroke(Color.BLACK);
+
+        this.getChildren().add(this.apparence);
     }
 
-    public int choixCouleur(){
-        int i= (int)Math.random()*(nbCouleur-1);
-        return i;
-    }
+
 }

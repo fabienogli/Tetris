@@ -5,9 +5,16 @@ package Model;
  */
 public class Coordonee {
     private int x,y;
+
+    //Les deux paramètre suivant = pas super utile
     private boolean piece;
     private TypePiece typePiece;
 
+    /**
+     * Constructeur de coordonne
+     * @param x indice axe abscisse
+     * @param y indice axe ordonee
+     */
     public Coordonee(int x, int y) {
         this.x = x;
         this.y = y;
@@ -18,9 +25,17 @@ public class Coordonee {
         this.piece = false;
     }
 
+    /**
+     * Setteur abscisse
+     * @param x
+     */
     public void setX(int x) {   this.x = x;
     }
 
+    /**
+     * Setteur ordonee
+     * @param y
+     */
     public void setY(int y) {
         this.y = y;
     }
@@ -30,11 +45,17 @@ public class Coordonee {
         this.typePiece = typePiece;
     }
 
+    /**
+     * Getteur indice abscisse
+     * @return x
+     */
     public int getX() {
         return x;
     }
 
-    public int getY() {
-        return y;
-    }
+    /**
+     * Getteur indice ordonnee
+     * @return y
+     */
+    public int getY() { return y; }
 }
