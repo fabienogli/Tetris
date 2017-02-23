@@ -1,19 +1,29 @@
 package Controler;
 
+import Model.Piece;
+import Model.TypePiece;
+import View.VuePiece;
 import View.VuePlateau;
+import javafx.scene.Parent;
 
 /**
  * Created by Fabien on 21/02/2017.
  */
-public class PlateauController {
+public class PlateauController{
     private GrilleControler grilleControler;
     private PieceControler pieceControler;
     private VuePlateau vuePlateau;
+    private boolean activiteJeu;
 
     public PlateauController(){
-
+        //gestionJeu();
     }
 
+    public void gestionJeu(){
+        vuePlateau.generatePiece();
+
+
+    }
     /**
      * @param grilleControler
      */

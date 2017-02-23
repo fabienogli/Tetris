@@ -1,7 +1,9 @@
 package View;
 
 import Controler.PlateauController;
+import Model.Piece;
 import Model.TypePiece;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
@@ -40,11 +42,17 @@ public class VuePlateau extends Parent{
 
         //Gestion du controleur
         controller = new PlateauController();
-        controller.setVuePlateau(this);
         controller.setGrilleControler(vueGrille.getControler());
+        controller.setVuePlateau(this);
+        //Generer Piece et la controler
+        controller.gestionJeu();
 
     }
 
+    public void generatePiece(){
+        VuePiece vuePiece = new VuePiece(new Piece(TypePiece.Tetrimino_I));
+        vueGrille.gridPane.getChildren().add(vuePiece);
+    }
     /**
      * Creation du Fond du plateau
      */
@@ -105,5 +113,12 @@ public class VuePlateau extends Parent{
      */
     public VueGrille getVueGrille() {
         return vueGrille;
+    }
+
+    /**
+     * Ajout d'un element a la grille
+     */
+    public void setPiece(Node node){
+        this.getChildren().add(node);
     }
 }

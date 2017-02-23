@@ -83,6 +83,9 @@ public class VuePiece extends Parent{
                     case LEFT:
                         controler.movePiece(Direction.GAUCHE);
                         break;
+                    case DOWN:
+                        controler.movePiece(Direction.BAS);
+                        break;
                     default:
                         break;
                 }
@@ -93,10 +96,16 @@ public class VuePiece extends Parent{
         this.setFocusTraversable(true);
     }
 
+    /**
+     * @return xPos indice abscisse dans la grille
+     */
     public int getxPos() {
         return xPos;
     }
 
+    /**
+     * @return yPos indice ordonne dans la grille
+     */
     public int getyPos() {
         return yPos;
     }
@@ -111,6 +120,9 @@ public class VuePiece extends Parent{
         this.setTranslateY(yPos*VueCase.getLenght());
     }
 
+    /**
+     * Remplie la palette de couleur
+     */
     public void remplirPalette(){
         palette = new Color[nbCouleur];
         palette[0] = Color.CYAN;
@@ -121,8 +133,16 @@ public class VuePiece extends Parent{
         palette[5] = Color.RED;
     }
 
+    /**
+     * Tirage aleatoire de la couleur
+     * @return indice de la couleur
+     */
     public int choixCouleur(){
         double i= Math.random()*(nbCouleur-1);
         return (int)i;
+    }
+
+    public PieceControler getControler() {
+        return controler;
     }
 }
