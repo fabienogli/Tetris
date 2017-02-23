@@ -10,7 +10,6 @@ import javafx.scene.shape.Rectangle;
 public class Case{
     //Est vrai lorsque une piece est sur une case
     private Boolean actif;
-    private Boolean caseSuivante;
     //Coordonnée de la case dans la grille
     private Coordonee coordonee;
 
@@ -46,6 +45,13 @@ public class Case{
     public Case(Coordonee coordonee){
         this.actif = false;
         this.coordonee = coordonee;
+    }
+
+    //controle si la case suivante est actif ou si ce n'est pas une case (aka la fin de la grille)
+    public Boolean getCaseSuivante(Case case1){
+        if( case1!= null)
+            return case1.getActif();
+        else return false;
     }
 
     /**

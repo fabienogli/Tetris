@@ -69,11 +69,7 @@ public class VuePiece extends Parent{
 
         //On ajoute la structure de la piece
         this.getChildren().add(structurePiece);
-//        if(aCase.getActif()){
-//            this.apparence.setFill(palette[choixCouleur()]);
-//        }
-//        else this.apparence.setFill(Color.WHITE);
-//        this.apparence.setStroke(Color.BLACK);
+
 
         //Gestion des actions du clavier
         EventHandler<KeyEvent> handler =new EventHandler<KeyEvent>() {

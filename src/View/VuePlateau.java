@@ -38,7 +38,9 @@ public class VuePlateau extends Parent{
 
 
 
-        //Attribution des controlers
+        //Gestion du controleur
+        controller = new PlateauController();
+        controller.setVuePlateau(this);
         controller.setGrilleControler(vueGrille.getControler());
 
     }
@@ -69,7 +71,7 @@ public class VuePlateau extends Parent{
 
 
     /**
-     * Creationd de la grille
+     * Creation de la grille
      */
     public void creationGrille(){
         double XposGrille = hauteur/3;
@@ -80,6 +82,9 @@ public class VuePlateau extends Parent{
 //        vueGrille.setFocusTraversable(true);
     }
 
+    public Text getTitre() {
+        return titre;
+    }
 
     /**
      * @return longueur Plateau
