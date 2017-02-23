@@ -4,12 +4,14 @@ import Controler.PieceControler;
 import Model.Case;
 import Model.Direction;
 import Model.Piece;
+import javafx.animation.RotateTransition;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 
 /**
@@ -75,7 +77,6 @@ public class VuePiece extends Parent{
         EventHandler<KeyEvent> handler =new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                System.out.println("Lecture evenement clavier");
                 switch (event.getCode()){
                     case RIGHT:
                         controler.movePiece(Direction.DROITE);
@@ -85,6 +86,12 @@ public class VuePiece extends Parent{
                         break;
                     case DOWN:
                         controler.movePiece(Direction.BAS);
+                        break;
+                    case E:
+                        rotate(Direction.DROITE);
+                        break;
+                    case A:
+                        rotate(Direction.GAUCHE);
                         break;
                     default:
                         break;
@@ -110,6 +117,28 @@ public class VuePiece extends Parent{
         return yPos;
     }
 
+    public void rotate(Direction direction){
+        RotateTransition rt = new RotateTransition(Duration.millis(200), this);
+
+        switch (direction){
+            case DROITE:
+                rt.setByAngle(90);
+                rt.setAutoReverse(true);
+                rt.play();
+                break;
+            case GAUCHE:
+                rt.setByAngle(-90);
+                rt.setAutoReverse(false);
+                rt.play();
+                break;
+                default:
+                    break;
+        }
+    }
+    /**
+     * Positionne la Piece dans la grille
+     * @param xPos
+     */
     public void setxPos(int xPos){
         this.xPos = xPos;
         setTranslateX(xPos*VueCase.getLenght());
