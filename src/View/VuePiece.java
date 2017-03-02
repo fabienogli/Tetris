@@ -98,7 +98,7 @@ public class VuePiece extends Parent{
                 }
             }
         };
-        this.setOnKeyPressed(handler);
+        //this.setOnKeyPressed(handler);
         this.requestFocus();
         this.setFocusTraversable(true);
     }

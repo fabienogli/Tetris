@@ -2,7 +2,9 @@ package View;
 
 import Controler.GrilleControler;
 import Model.*;
+import com.sun.javafx.geom.Vec2d;
 import javafx.event.EventHandler;
+import javafx.geometry.Dimension2D;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -11,15 +13,20 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.security.Key;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Vue de la grille
  * Created by Fabien on 14/02/2017.
  */
-public class VueGrille extends Parent {
+public class VueGrille extends Parent implements Observer {
     private Grille grille;
-    GridPane gridPane;
+    private GridPane gridPane;
     private GrilleControler controler;
+    private VueCase[][] cases;
+    private Piece PieceCourante;
+    private Coordonee coordoneePrec;
 
     public VueGrille(double Xpos, double Ypos){
         //Initialisation de la grille
@@ -30,7 +37,11 @@ public class VueGrille extends Parent {
         controler.setVueGrille(this);
 
         //Récupération de la grille
-        grille = controler.getGrille();
+        grille = new Grille(10,20);
+
+        //Ajout de l'observer
+        grille.addObserver(this);
+        controler.setGrille(grille);
 
         //Recuperation de la longueur de la grille
         int longueur = grille.getX();
@@ -38,10 +49,10 @@ public class VueGrille extends Parent {
         //recuperation de la hauteur de la grille
         int hauteur = grille.getY();
 
-        System.out.println("hauteur: "+hauteur+" et longueur: "+ longueur);
+        //Creation de la vue des cases
+        cases = new VueCase[longueur][hauteur];
+
         //Definit les contraintes des lignes
-
-
         for(int i=0; i<hauteur; i++){
             RowConstraints rowConstraints = new RowConstraints(VueCase.getLenght());
             rowConstraints.setFillHeight(true);
@@ -49,6 +60,7 @@ public class VueGrille extends Parent {
             gridPane.getRowConstraints().add(rowConstraints);
 
         }
+        //Définit les contraintes des colonnes
         for(int j =0; j<longueur ;j++){
             ColumnConstraints columnConstraints = new ColumnConstraints(VueCase.getLenght());
             columnConstraints.setFillWidth(true);
@@ -62,7 +74,8 @@ public class VueGrille extends Parent {
         //Ajout de VueCase dans la grille
         for(int i=0; i<longueur;i++){
             for(int j=0; j<hauteur;j++){
-                gridPane.add(new VueCase(grille.getCase(i,j)),i,j);
+                cases[i][j] =new VueCase(grille.getCase(i,j));
+                gridPane.add(cases[i][j], i, j);
             }
         }
 
@@ -93,5 +106,32 @@ public class VueGrille extends Parent {
      */
     public GridPane getGridPane() {
         return gridPane;
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+        this.PieceCourante = (Piece) o;
+        Boolean efface = false;
+        Coordonee coordonee = PieceCourante.getCoordonee();
+        Vec2d dimension = PieceCourante.getDimension();
+        if(coordoneePrec != null){
+            while (!efface)
+                for(int i =0; i< dimension.x;i++){
+                    for(int j =0; j<dimension.y;j++){
+                        //Effacé la piece à la position précédente
+                        cases[i+coordoneePrec.getX()][j+coordoneePrec.getY()].changerCouleur(Color.WHITE);
+                    }
+                    if(i== dimension.x-1)
+                        efface = true;
+                }
+        }
+        for(int x= 0; x< dimension.x;x++){
+            for(int y= 0; y< dimension.y;y++){
+                if (PieceCourante.getCase(x,y)!=null && PieceCourante.getCase(x,y).getActif()){
+                    cases[x+coordonee.getX()][y+coordonee.getY()].changerCouleur(PieceCourante.getColor());
+                }
+            }
+        }
+        coordoneePrec = new Coordonee(coordonee.getX(),coordonee.getY());
     }
 }

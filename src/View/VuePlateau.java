@@ -1,10 +1,13 @@
 package View;
 
 import Controler.PlateauController;
+import Model.Direction;
 import Model.Piece;
 import Model.TypePiece;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
@@ -33,26 +36,47 @@ public class VuePlateau extends Parent{
         //determination de la longueur de la fenêtre
         longueur = 600;
         hauteur = 600;
-
         creationFond();
         creationTitre(TypeJeu.Tetris);
         creationGrille();
-
 
 
         //Gestion du controleur
         controller = new PlateauController();
         controller.setGrilleControler(vueGrille.getControler());
         controller.setVuePlateau(this);
-        //Generer Piece et la controler
-        controller.gestionJeu();
 
+        //Gestion des actions du clavier
+        EventHandler<KeyEvent> handler =new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                switch (event.getCode()){
+                    case ENTER:
+                        startGame();
+                        break;
+                    case RIGHT:
+                        controller.getGrilleControler().movePiece(Direction.DROITE);
+                        break;
+                    case LEFT:
+                        controller.getGrilleControler().movePiece(Direction.GAUCHE);
+                        break;
+                    case DOWN:
+                        controller.getGrilleControler().movePiece(Direction.BAS);
+                        break;
+//                    case E:
+//                        rotate(Direction.DROITE);
+//                        break;
+//                    case A:
+//                        rotate(Direction.GAUCHE);
+//                        break;
+                    default:
+                        break;
+                }
+            }
+        };
+        this.setOnKeyPressed(handler);
     }
 
-    public void generatePiece(){
-        VuePiece vuePiece = new VuePiece(new Piece(TypePiece.Tetrimino_I));
-        vueGrille.gridPane.getChildren().add(vuePiece);
-    }
     /**
      * Creation du Fond du plateau
      */
@@ -120,5 +144,14 @@ public class VuePlateau extends Parent{
      */
     public void setPiece(Node node){
         this.getChildren().add(node);
+    }
+
+    public void generatePiece(){
+        controller.getGrilleControler().putPiece(new Piece(TypePiece.Tetrimino_J));
+    }
+
+    public void startGame(){
+        //Generer Piece et la controler
+        controller.gestionJeu();
     }
 }

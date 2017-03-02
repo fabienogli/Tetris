@@ -39,5 +39,9 @@ public class VueCase extends Parent{
         this.getChildren().add(this.apparence);
     }
 
+    public void changerCouleur(Color color){
+        this.apparence.setFill(color);
+    }
+
 
 }

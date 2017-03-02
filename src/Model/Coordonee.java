@@ -42,10 +42,7 @@ public class Coordonee {
         this.y = y;
     }
 
-    public void setPiece(boolean piece, TypePiece typePiece) {
-        this.piece = piece;
-        this.typePiece = typePiece;
-    }
+
 
     /**
      * Getteur indice abscisse
@@ -60,4 +57,10 @@ public class Coordonee {
      * @return y
      */
     public int getY() { return y; }
+
+    @Override
+    public String toString(){
+        String s = "x= "+x+" et y= "+y;
+        return s;
+    }
 }

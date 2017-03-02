@@ -1,6 +1,7 @@
 package Model;
 
 import com.sun.javafx.geom.Vec2d;
+import javafx.scene.paint.Color;
 
 /**
  * Created by Fabien on 14/02/2017.
@@ -11,7 +12,7 @@ public class Piece implements moveAble{
     private Case[][] cases;
     private Vec2d dimension;
     private int xpos,ypos;
-    private boolean change;
+    private Color color;
 
     /**
      * Setteur de coordonnee
@@ -115,6 +116,7 @@ public class Piece implements moveAble{
      * Constructeur du Tetriminos Z
      */
     private void make_Z() {
+        color =Color.RED;
         for(int j=0 ; j<xpos-1; j++){
             this.cases[j][0] = new Case();
             this.cases[j][0].caseActiv();
@@ -128,16 +130,12 @@ public class Piece implements moveAble{
      * Constructeur du Tetriminos T
      */
     private void make_T() {
-        int ligne =0;
-        for(int colonne = 0; colonne<this.ypos; colonne++){
-            if(ligne ==0){
-                this.cases[ligne][1] = new Case();
-                this.cases[ligne][1].caseActiv();
-                colonne =0;
-                ligne =1;
-            }
-            this.cases[ligne][colonne] = new Case();
-            this.cases[ligne][colonne].caseActiv();
+        color = Color.PURPLE;
+        this.cases[1][0] = new Case();
+        this.cases[1][0].caseActiv();
+        for(int colonne = 0; colonne<this.xpos; colonne++){
+            this.cases[colonne][1] = new Case();
+            this.cases[colonne][1].caseActiv();
         }
     }
 
@@ -145,6 +143,7 @@ public class Piece implements moveAble{
      * Constructeur du Tetriminos S
      */
     private void make_S() {
+        color = Color.LIME;
         for(int j=0 ; j<xpos-1; j++){
             this.cases[j][1] = new Case();
             this.cases[j][1].caseActiv();
@@ -157,6 +156,7 @@ public class Piece implements moveAble{
      * Constructeur du Tetriminos O
      */
     private void make_O() {
+        color = Color.YELLOW;
         for(int ligne = 0; ligne<2;ligne++){
             for(int colonne =0 ; colonne<2;colonne++){
                 this.cases[ligne][colonne] = new Case();
@@ -169,6 +169,7 @@ public class Piece implements moveAble{
      * Constructeur du Tetriminos L
      */
     private void make_L() {
+        color = Color.ORANGE;
         for(int x=0;x<xpos;x++){
             this.cases[x][0] =new Case();
             this.cases[x][0].caseActiv();
@@ -181,6 +182,7 @@ public class Piece implements moveAble{
      * Constructeur du Tetriminos J
      */
     private void make_J() {
+        color = Color.BLUE;
         for(int x=0;x<xpos;x++){
             this.cases[x][0] =new Case();
             this.cases[x][0].caseActiv();
@@ -193,6 +195,7 @@ public class Piece implements moveAble{
      * Constructeur du Tetriminos I
      */
     private void make_I(){
+        color = Color.CYAN;
         for(int x=0; x<xpos; x++){
             this.cases[x][0] = new Case();
             this.cases[x][0].caseActiv();
@@ -225,7 +228,6 @@ public class Piece implements moveAble{
             default:
                 break;
         }
-        System.out.println("Action Clavier");
     }
 
     /**
@@ -236,5 +238,9 @@ public class Piece implements moveAble{
      */
     public Case getCase(int i, int j){
         return this.cases[i][j];
+    }
+
+    public Color getColor() {
+        return color;
     }
 }

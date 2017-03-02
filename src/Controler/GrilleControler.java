@@ -4,6 +4,7 @@ import Model.*;
 import View.VueGrille;
 
 import java.util.ArrayList;
+import java.util.Observer;
 
 /**
  * Controller de la grille
@@ -19,21 +20,20 @@ public class GrilleControler {
     /**
      * Constructeur de GrilleController
      */
-    public GrilleControler() {
-        grille = new Grille(10,20);
+    public GrilleControler(){
     }
 
     public Piece getPiece() {
         return piece;
     }
 
-    public void putPiece(){
-        grille.put_erasePiece(piece,false);
+    public void putPiece(Piece piece){
+        this.piece = piece;
+        grille.putPiece(piece);
     }
 
     public void movePiece(Direction direction){
-        grille.put_erasePiece(piece,true);
-        //grille.movePiece(piece,direction);
+        grille.movePiece(piece,direction);
     }
 
     public void setVueGrille(VueGrille vueGrille) {
@@ -45,6 +45,9 @@ public class GrilleControler {
 
     public Grille getGrille(){
         return grille;
+    }
+    public void setGrille(Grille grille){
+        this.grille = grille;
     }
 
 

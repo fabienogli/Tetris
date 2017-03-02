@@ -4,9 +4,11 @@ import View.VueGrille;
 import View.VuePiece;
 import View.VuePlateau;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -16,10 +18,9 @@ public class Main extends Application {
         VuePlateau vuePlateau = new VuePlateau();
         int longueur = vuePlateau.getLongueur();
         int largeur = vuePlateau.getLargeur();
-
         //VuePiece vuePiece = new VuePiece(new Piece(TypePiece.Tetrimino_I));
         Scene root = new Scene(vuePlateau, longueur, largeur);
-
+        root.setOnKeyPressed(vuePlateau.getOnKeyPressed());
         //Ajout de la gestion d'évènement clavier a la scene
         //root.setOnKeyPressed(vuePiece.getOnKeyPressed());
         primaryStage.setTitle("Hello World");

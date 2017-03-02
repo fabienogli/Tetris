@@ -21,8 +21,6 @@ public class PlateauController{
 
     public void gestionJeu(){
         vuePlateau.generatePiece();
-
-
     }
     /**
      * @param grilleControler

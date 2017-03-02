@@ -3,10 +3,13 @@ package Model;
 
 import com.sun.javafx.geom.Vec2d;
 
+import java.util.Observable;
+
 /**
+ * Hérité d'observable pour envoyer des notifications à la VUE.
  * Created by Fabien on 14/02/2017.
  */
-public class Grille {
+public class Grille extends Observable {
 
     private int longueur;
     private int hauteur;
@@ -69,9 +72,8 @@ public class Grille {
     /**
      * Permet d'ajouter une piece dans la grille
      * @param piece
-     * @param born boolean true si la piece est deja dans la grille
      */
-    public void put_erasePiece(Piece piece, boolean born){
+    public void putPiece(Piece piece){
         int x = piece.getCoordonee().getX();
         int y= piece.getCoordonee().getY();
         Vec2d dimension = piece.getDimension();
@@ -80,20 +82,14 @@ public class Grille {
             int z = y;
             for (int colonne=0; colonne<(int)dimension.y; colonne++){
                 if(piece_c[ligne][colonne] !=null){
-                    if (!born){
-                        this.cases[x][z] = piece_c[ligne][colonne];
-                        this.cases[x][z].getCoordonee().setPiece(true, piece.getTypePiece());
-                    }
-                    else {
-                        System.out.println("ici");
-                        this.cases[x][y].caseInactiv();
-                        this.cases[x][z].getCoordonee().setPiece(false, piece.getTypePiece());
-                    }
+                    this.cases[x][z] = piece_c[ligne][colonne];
                 }
                 z++;
             }
             x++;
         }
+        setChanged();
+        notifyObservers(piece);
     }
 
     /**
@@ -102,12 +98,38 @@ public class Grille {
      * @param direction
      */
     public void movePiece(Piece piece, Direction direction){
-        int x = piece.getCoordonee().getX();
-        int y = piece.getCoordonee().getY();
-        put_erasePiece(piece, true);
+        setChanged();
+        notifyObservers(piece);
+//        for(int i=0; i< piece.getDimension().x;i++){
+//            for(int j=0; j< piece.getDimension().y;j++){
+//                if(piece.getCase(i,j)!=null){
+//                    int a,b;
+//                    this.cases[x+i][y+j].caseInactiv();
+//                    switch (direction){
+//                        case BAS:
+//                            a = x+i+1;
+//                            b = y+j;
+//                            break;
+//                        case DROITE:
+//                            a = x+i;
+//                            b = y+j+1;
+//                            break;
+//                        case GAUCHE:
+//                            a = x+i;
+//                            b = y+j-1;
+//                            break;
+//                        default:
+//                            a=0;
+//                            b=0;
+//                            break;
+//                    }
+//                    this.cases[a][b].caseActiv();
+//                }
+//            }
+//        }
         piece.move(direction);
-        put_erasePiece(piece,false);
-
+        setChanged();
+        notifyObservers(piece);
     }
 
 
