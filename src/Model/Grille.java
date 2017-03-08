@@ -98,8 +98,6 @@ public class Grille extends Observable {
      * @param direction
      */
     public void movePiece(Piece piece, Direction direction){
-        setChanged();
-        notifyObservers(piece);
 //        for(int i=0; i< piece.getDimension().x;i++){
 //            for(int j=0; j< piece.getDimension().y;j++){
 //                if(piece.getCase(i,j)!=null){
@@ -128,6 +126,12 @@ public class Grille extends Observable {
 //            }
 //        }
         piece.move(direction);
+        setChanged();
+        notifyObservers(piece);
+    }
+
+    public void rotate_piece(Piece piece, Direction direction){
+        piece.rotation(direction);
         setChanged();
         notifyObservers(piece);
     }

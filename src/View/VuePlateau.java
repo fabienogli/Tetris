@@ -63,12 +63,12 @@ public class VuePlateau extends Parent{
                     case DOWN:
                         controller.getGrilleControler().movePiece(Direction.BAS);
                         break;
-//                    case E:
-//                        rotate(Direction.DROITE);
-//                        break;
-//                    case A:
-//                        rotate(Direction.GAUCHE);
-//                        break;
+                    case E:
+                        controller.getGrilleControler().rotatePiece(Direction.DROITE);
+                        break;
+                    case A:
+                        controller.getGrilleControler().rotatePiece(Direction.GAUCHE);
+                        break;
                     default:
                         break;
                 }
@@ -147,7 +147,7 @@ public class VuePlateau extends Parent{
     }
 
     public void generatePiece(){
-        controller.getGrilleControler().putPiece(new Piece(TypePiece.Tetrimino_J));
+        controller.getGrilleControler().putPiece(new Piece(TypePiece.Tetrimino_L));
     }
 
     public void startGame(){

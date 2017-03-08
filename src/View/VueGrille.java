@@ -11,6 +11,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Rotate;
 
 import java.security.Key;
 import java.util.Observable;
@@ -26,6 +27,7 @@ public class VueGrille extends Parent implements Observer {
     private GrilleControler controler;
     private VueCase[][] cases;
     private Piece PieceCourante;
+    private Vec2d dimensionPrec;
     private Coordonee coordoneePrec;
 
     public VueGrille(double Xpos, double Ypos){
@@ -116,8 +118,8 @@ public class VueGrille extends Parent implements Observer {
         Vec2d dimension = PieceCourante.getDimension();
         if(coordoneePrec != null){
             while (!efface)
-                for(int i =0; i< dimension.x;i++){
-                    for(int j =0; j<dimension.y;j++){
+                for(int i =0; i< dimensionPrec.x;i++){
+                    for(int j =0; j<dimensionPrec.y;j++){
                         //Effacé la piece à la position précédente
                         cases[i+coordoneePrec.getX()][j+coordoneePrec.getY()].changerCouleur(Color.WHITE);
                     }
@@ -133,5 +135,33 @@ public class VueGrille extends Parent implements Observer {
             }
         }
         coordoneePrec = new Coordonee(coordonee.getX(),coordonee.getY());
+        dimensionPrec = new Vec2d(PieceCourante.getDimension().x, PieceCourante.getDimension().y);
+    }
+
+    public void rotatePiece(Piece piece, Direction direction){
+        Coordonee coordonee = piece.getCoordonee();
+        Vec2d dimension = piece.getDimension();
+        double pivotX = piece.getPivotX();
+        double pivotY = piece.getPivotY();
+        double angle;
+        switch (direction){
+            case DROITE:
+                angle = 90;
+                break;
+            case GAUCHE:
+                angle = -90;
+                break;
+            default:
+                angle = 0;
+                break;
+        }
+        Rotate rotation = new Rotate(angle, pivotX,pivotY);
+        for(int x= 0; x< dimension.x;x++){
+            for(int y= 0; y< dimension.y;y++){
+                if (piece.getCase(x,y)!=null && piece.getCase(x,y).getActif()){
+                    cases[x+coordonee.getX()][y+coordonee.getY()].getTransforms().add(rotation);
+                }
+            }
+        }
     }
 }

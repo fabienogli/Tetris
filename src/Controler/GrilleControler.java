@@ -36,6 +36,10 @@ public class GrilleControler {
         grille.movePiece(piece,direction);
     }
 
+    public void rotatePiece(Direction direction){
+        this.grille.rotate_piece(piece, direction);
+    }
+
     public void setVueGrille(VueGrille vueGrille) {
         this.vueGrille = vueGrille;
     }
