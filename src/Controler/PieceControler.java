@@ -4,7 +4,6 @@ import Model.Direction;
 import Model.Grille;
 import Model.Piece;
 import Model.TypePiece;
-import View.VuePiece;
 import javafx.event.EventHandler;
 
 /**
@@ -13,7 +12,6 @@ import javafx.event.EventHandler;
  */
 public class PieceControler {
     private Piece piece;
-    private VuePiece vuePiece;
 
     public PieceControler(TypePiece typePiece){
         this.piece = new Piece(typePiece);
@@ -29,11 +27,7 @@ public class PieceControler {
 
     public void movePiece(Direction direction){
         piece.move(direction);
-        vuePiece.setxPos(piece.getCoordonee().getX());
-        vuePiece.setyPos(piece.getCoordonee().getY());
     }
 
-    public void setVuePiece(VuePiece vuePiece){
-        this.vuePiece = vuePiece;
-    }
+
 }

@@ -29,8 +29,13 @@ public class VueGrille extends Parent implements Observer {
     private Piece PieceCourante;
     private Vec2d dimensionPrec;
     private Coordonee coordoneePrec;
+    private int[][] casePiecePrec;
+    private Boolean actif;
 
     public VueGrille(double Xpos, double Ypos){
+
+        actif = true;
+
         //Initialisation de la grille
         gridPane = new GridPane();
 
@@ -113,29 +118,44 @@ public class VueGrille extends Parent implements Observer {
     @Override
     public void update(Observable observable, Object o) {
         this.PieceCourante = (Piece) o;
+        if(PieceCourante.isAlive())
+            affichage_deplacementPiece();
+
+    }
+
+    public Boolean erasePiece(Boolean efface, Vec2d dimension){
+        for(int i =0; i< casePiecePrec.length;i++){
+            for(int j =0; j<casePiecePrec[0].length;j++){
+                //Efface la piece à la position précédente
+                if(casePiecePrec[j][i]==1)
+                    cases[i+coordoneePrec.getX()][j+coordoneePrec.getY()].changerCouleur(Color.WHITE);
+            }
+            if(i== dimension.x-1)
+                efface = true;
+        }
+        return efface;
+    }
+
+    public void displayPiece(Coordonee coordonee, Vec2d dimension){
+        for(int x= 0; x< dimension.x;x++){
+            for(int y= 0; y< dimension.y;y++){
+                if (PieceCourante.getCase(x,y)!=0){
+                    cases[x+coordonee.getX()][y+coordonee.getY()].changerCouleur(PieceCourante.getColor());
+                }
+            }
+        }
+    }
+    public void affichage_deplacementPiece(){
         Boolean efface = false;
         Coordonee coordonee = PieceCourante.getCoordonee();
         Vec2d dimension = PieceCourante.getDimension();
         if(coordoneePrec != null){
             while (!efface)
-                for(int i =0; i< dimensionPrec.x;i++){
-                    for(int j =0; j<dimensionPrec.y;j++){
-                        //Effacé la piece à la position précédente
-                        cases[i+coordoneePrec.getX()][j+coordoneePrec.getY()].changerCouleur(Color.WHITE);
-                    }
-                    if(i== dimension.x-1)
-                        efface = true;
-                }
+                efface = erasePiece(efface,dimension);
         }
-        for(int x= 0; x< dimension.x;x++){
-            for(int y= 0; y< dimension.y;y++){
-                if (PieceCourante.getCase(x,y)!=null && PieceCourante.getCase(x,y).getActif()){
-                    cases[x+coordonee.getX()][y+coordonee.getY()].changerCouleur(PieceCourante.getColor());
-                }
-            }
-        }
+        displayPiece(coordonee,dimension);
+        casePiecePrec = PieceCourante.getCases();
         coordoneePrec = new Coordonee(coordonee.getX(),coordonee.getY());
-        dimensionPrec = new Vec2d(PieceCourante.getDimension().x, PieceCourante.getDimension().y);
     }
 
     public void rotatePiece(Piece piece, Direction direction){
@@ -158,10 +178,16 @@ public class VueGrille extends Parent implements Observer {
         Rotate rotation = new Rotate(angle, pivotX,pivotY);
         for(int x= 0; x< dimension.x;x++){
             for(int y= 0; y< dimension.y;y++){
-                if (piece.getCase(x,y)!=null && piece.getCase(x,y).getActif()){
+                if (piece.getCase(x,y)!=0 ){
                     cases[x+coordonee.getX()][y+coordonee.getY()].getTransforms().add(rotation);
                 }
             }
         }
     }
+
+    public Boolean getActif() {
+        return actif;
+    }
+
+
 }

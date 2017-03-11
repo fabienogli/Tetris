@@ -2,8 +2,8 @@ package Controler;
 
 import Model.Piece;
 import Model.TypePiece;
-import View.VuePiece;
 import View.VuePlateau;
+import javafx.animation.Timeline;
 import javafx.scene.Parent;
 
 /**
@@ -14,6 +14,8 @@ public class PlateauController{
     private PieceControler pieceControler;
     private VuePlateau vuePlateau;
     private boolean activiteJeu;
+    private Timeline timeline;
+
 
     public PlateauController(){
         //gestionJeu();

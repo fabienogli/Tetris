@@ -74,22 +74,10 @@ public class Grille extends Observable {
      * @param piece
      */
     public void putPiece(Piece piece){
-        int x = piece.getCoordonee().getX();
-        int y= piece.getCoordonee().getY();
-        Vec2d dimension = piece.getDimension();
-        Case[][] piece_c = piece.getCases();
-        for(int ligne =0; ligne <(int)dimension.x; ligne++){
-            int z = y;
-            for (int colonne=0; colonne<(int)dimension.y; colonne++){
-                if(piece_c[ligne][colonne] !=null){
-                    this.cases[x][z] = piece_c[ligne][colonne];
-                }
-                z++;
-            }
-            x++;
+        if(!controlCases(piece)){
+            setChanged();
+            notifyObservers(piece);
         }
-        setChanged();
-        notifyObservers(piece);
     }
 
     /**
@@ -98,42 +86,81 @@ public class Grille extends Observable {
      * @param direction
      */
     public void movePiece(Piece piece, Direction direction){
-//        for(int i=0; i< piece.getDimension().x;i++){
-//            for(int j=0; j< piece.getDimension().y;j++){
-//                if(piece.getCase(i,j)!=null){
-//                    int a,b;
-//                    this.cases[x+i][y+j].caseInactiv();
-//                    switch (direction){
-//                        case BAS:
-//                            a = x+i+1;
-//                            b = y+j;
-//                            break;
-//                        case DROITE:
-//                            a = x+i;
-//                            b = y+j+1;
-//                            break;
-//                        case GAUCHE:
-//                            a = x+i;
-//                            b = y+j-1;
-//                            break;
-//                        default:
-//                            a=0;
-//                            b=0;
-//                            break;
-//                    }
-//                    this.cases[a][b].caseActiv();
-//                }
-//            }
-//        }
         piece.move(direction);
-        setChanged();
-        notifyObservers(piece);
+        if(!controlCases(piece)){
+            setChanged();
+            notifyObservers(piece);
+        }
+        else {
+            switch (direction){
+                case GAUCHE:
+                    piece.move(Direction.DROITE);
+                    break;
+                case DROITE:
+                    piece.move(Direction.GAUCHE);
+                    break;
+                case BAS:
+                    piece.move(Direction.Haut);
+            }
+        }
     }
 
     public void rotate_piece(Piece piece, Direction direction){
         piece.rotation(direction);
-        setChanged();
-        notifyObservers(piece);
+        if(!controlCases(piece)){
+            setChanged();
+            notifyObservers(piece);
+        }
+        else {
+            switch (direction){
+                case GAUCHE:
+                    piece.rotation(Direction.DROITE);
+                    break;
+                case DROITE:
+                    piece.rotation(Direction.GAUCHE);
+                    break;
+                case BAS:
+                    piece.rotation(Direction.Haut);
+            }
+        }
+    }
+
+    public boolean controlCases(Piece piece){
+        int[][] pc = piece.getCases();
+//
+
+
+        int x = piece.getCoordonee().getX();
+        int y= piece.getCoordonee().getY();
+        Vec2d dimension = piece.getDimension();
+        Boolean fin = false;
+        boolean verif = false;
+        if(!verif){
+            for(int ligne =0; ligne <(int)dimension.x; ligne++){
+                for (int colonne=0; colonne<(int)dimension.y; colonne++){
+                    if(pc[ligne][colonne] ==1){
+                        if(ligne+y == hauteur-1)
+                            fin= true;
+                        if(colonne+x<0||colonne+x>=longueur||ligne+y<0||ligne+y>=hauteur)
+                            verif = true;
+                        else if(this.cases[colonne+x][ligne+y].getActif()){
+                            verif = true;
+
+                        }
+                    }
+                }
+            }
+        }
+        if(fin){
+            for(int ligne =0; ligne <(int)dimension.x; ligne++){
+                for (int colonne=0; colonne<(int)dimension.y; colonne++){
+                    System.out.println("fin");
+                    this.cases[colonne+x][ligne+y].caseActiv();
+                    }
+            }
+            piece.kill();
+        }
+        return verif;
     }
 
 

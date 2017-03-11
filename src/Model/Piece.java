@@ -9,9 +9,12 @@ import javafx.scene.transform.MatrixType;
  * Created by Fabien on 14/02/2017.
  */
 public class Piece implements moveAble {
+    private boolean alive;
     private Coordonee coordonee;
     private TypePiece typePiece;
-    private Case[][] cases;
+    private int[][][] cases;
+    private boolean[] positions = new boolean[4];
+    private int positionActive;
     private Vec2d dimension;
     private int xpos, ypos;
     private Color color;
@@ -55,6 +58,7 @@ public class Piece implements moveAble {
 
 
     public Piece() {
+        this.alive = true;
         this.coordonee = new Coordonee();
     }
 
@@ -67,15 +71,15 @@ public class Piece implements moveAble {
         this.typePiece = typePiece;
         switch (this.typePiece) {
             case Tetrimino_I:
-                setCases(4, 1);
+                setCases(4, 4);
                 make_I();
                 break;
             case Tetrimino_J:
-                setCases(3, 2);
+                setCases(3, 3);
                 make_J();
                 break;
             case Tetrimino_L:
-                setCases(3, 2);
+                setCases(3, 3);
                 make_L();
                 break;
             case Tetrimino_O:
@@ -83,15 +87,15 @@ public class Piece implements moveAble {
                 make_O();
                 break;
             case Tetrimino_S:
-                setCases(3, 2);
+                setCases(3, 3);
                 make_S();
                 break;
             case Tetrimino_T:
-                setCases(3, 2);
+                setCases(3, 3);
                 make_T();
                 break;
             case Tetrimino_Z:
-                setCases(3, 2);
+                setCases(3, 3);
                 make_Z();
                 break;
             default:
@@ -108,8 +112,11 @@ public class Piece implements moveAble {
     public void setCases(int xpos, int ypos) {
         this.xpos = xpos;
         this.ypos = ypos;
-        this.cases = new Case[xpos][ypos];
         this.dimension = new Vec2d(this.xpos, this.ypos);
+        for (int i = 0; i < positions.length; i++)
+            positions[i] = false;
+        positionActive = 0;
+        positions[0] = true;
     }
 
     /**
@@ -127,13 +134,31 @@ public class Piece implements moveAble {
      */
     private void make_Z() {
         color = Color.RED;
-        for (int j = 0; j < xpos - 1; j++) {
-            this.cases[j][0] = new Case();
-            this.cases[j][0].caseActiv();
-            this.cases[j + 1][1] = new Case();
-            this.cases[j + 1][1].caseActiv();
-        }
+        this.cases = new int[][][]
+                {
+                        {
+                                {0, 0, 0},
+                                {1, 1, 0},
+                                {0, 1, 1}
+                        },
+                        {
+                                {0, 0, 1},
+                                {0, 1, 1},
+                                {0, 1, 0}
 
+                        },
+                        {
+                                {1, 1, 0},
+                                {0, 1, 1},
+                                {0, 0, 0}
+                        },
+                        {
+                                {0, 1, 0},
+                                {1, 1, 0},
+                                {1, 0, 0}
+                        }
+                }
+        ;
     }
 
     /**
@@ -141,12 +166,48 @@ public class Piece implements moveAble {
      */
     private void make_T() {
         color = Color.PURPLE;
-        this.cases[1][0] = new Case();
-        this.cases[1][0].caseActiv();
-        for (int colonne = 0; colonne < this.xpos; colonne++) {
-            this.cases[colonne][1] = new Case();
-            this.cases[colonne][1].caseActiv();
-        }
+        this.cases = new int[][][]
+                {
+                        {
+                                {1, 1, 1},
+                                {0, 1, 0},
+                                {0, 0, 0}
+                        },
+                        {
+                                {1, 0, 0},
+                                {1, 1, 0},
+                                {1, 0, 0}
+
+                        },
+                        {
+                                {0, 0, 0},
+                                {0, 1, 0},
+                                {1, 1, 1}
+                        },
+                        {
+                                {0, 0, 1},
+                                {0, 1, 1},
+                                {0, 0, 1}
+                        }
+                }
+        ;
+    }
+
+
+
+    /**
+     * Constructeur du Tetriminos O
+     */
+    private void make_O() {
+        color = Color.YELLOW;
+        this.cases = new int[][][]
+                {
+                        {
+                                {1, 1},
+                                {1, 1}
+                        }
+                }
+        ;
     }
 
     /**
@@ -154,25 +215,31 @@ public class Piece implements moveAble {
      */
     private void make_S() {
         color = Color.LIME;
-        for (int j = 0; j < xpos - 1; j++) {
-            this.cases[j][1] = new Case();
-            this.cases[j][1].caseActiv();
-            this.cases[j + 1][0] = new Case();
-            this.cases[j + 1][0].caseActiv();
-        }
-    }
+        this.cases = new int[][][]
+                {
+                        {
+                                {0, 1, 1},
+                                {1, 1, 0},
+                                {0, 0, 0}
+                        },
+                        {
+                                {1, 0, 0},
+                                {1, 1, 0},
+                                {0, 1, 0}
 
-    /**
-     * Constructeur du Tetriminos O
-     */
-    private void make_O() {
-        color = Color.YELLOW;
-        for (int ligne = 0; ligne < 2; ligne++) {
-            for (int colonne = 0; colonne < 2; colonne++) {
-                this.cases[ligne][colonne] = new Case();
-                this.cases[ligne][colonne].caseActiv();
-            }
-        }
+                        },
+                        {
+                                {0, 0, 0},
+                                {0, 1, 1},
+                                {1, 1, 0}
+                        },
+                        {
+                                {0, 1, 0},
+                                {0, 1, 1},
+                                {0, 0, 1}
+                        }
+                }
+        ;
     }
 
     /**
@@ -180,14 +247,30 @@ public class Piece implements moveAble {
      */
     private void make_L() {
         color = Color.ORANGE;
-        for (int x = 0; x < xpos; x++) {
-            this.cases[x][0] = new Case();
-            this.cases[x][0].caseActiv();
-        }
-        this.cases[0][1] = new Case();
-        this.cases[0][1].caseActiv();
-        setPivotX(1);
-        setPivotY(1);
+        this.cases = new int[][][]
+                {
+                        {
+                                {1, 1, 1},
+                                {1, 0, 0},
+                                {0, 0, 0}
+                        },
+                        {
+                                {1, 0, 0},
+                                {1, 0, 0},
+                                {1, 1, 0}
+                        },
+                        {
+                                {0, 0, 0},
+                                {0, 0, 1},
+                                {1, 1, 1}
+                        },
+                        {
+                                {0, 1, 1},
+                                {0, 0, 1},
+                                {0, 0, 1}
+                        }
+                }
+        ;
     }
 
     /**
@@ -195,12 +278,30 @@ public class Piece implements moveAble {
      */
     private void make_J() {
         color = Color.BLUE;
-        for (int x = 0; x < xpos; x++) {
-            this.cases[x][0] = new Case();
-            this.cases[x][0].caseActiv();
-        }
-        this.cases[xpos - 1][1] = new Case();
-        this.cases[xpos - 1][1].caseActiv();
+        this.cases = new int[][][]
+                {
+                        {
+                                {1, 1, 1},
+                                {0, 0, 1},
+                                {0, 0, 0}
+                        },
+                        {
+                                {1, 1, 0},
+                                {1, 0, 0},
+                                {1, 0, 0}
+                        },
+                        {
+                                {0, 0, 0},
+                                {1, 0, 0},
+                                {1, 1, 1}
+                        },
+                        {
+                                {0, 0, 1},
+                                {0, 0, 1},
+                                {0, 1, 1}
+                        }
+                }
+        ;
     }
 
     /**
@@ -208,10 +309,22 @@ public class Piece implements moveAble {
      */
     private void make_I() {
         color = Color.CYAN;
-        for (int x = 0; x < xpos; x++) {
-            this.cases[x][0] = new Case();
-            this.cases[x][0].caseActiv();
-        }
+        this.cases = new int[][][]
+                {
+                        {
+                                {1, 0, 0, 0},
+                                {1, 0, 0, 0},
+                                {1, 0, 0, 0},
+                                {1, 0, 0, 0}
+                        },
+                        {
+                                {1, 1, 1, 1},
+                                {0, 0, 0, 0},
+                                {0, 0, 0, 0},
+                                {0, 0, 0, 0}
+                        }
+                }
+        ;
     }
 
     /**
@@ -219,8 +332,8 @@ public class Piece implements moveAble {
      *
      * @return cases
      */
-    public Case[][] getCases() {
-        return cases;
+    public int[][] getCases() {
+        return cases[positionActive];
     }
 
     /**
@@ -239,6 +352,9 @@ public class Piece implements moveAble {
                 break;
             case GAUCHE:
                 coordonee.setX(coordonee.getX() - 1);
+                break;
+            case Haut:
+                coordonee.setY(coordonee.getY() - 1);
             default:
                 break;
         }
@@ -268,22 +384,21 @@ public class Piece implements moveAble {
      * @param j indice ordonnee
      * @return
      */
-    public Case getCase(int i, int j) {
-        return this.cases[i][j];
+    public int getCase(int i, int j) {
+        return getCases()[j][i];
     }
 
     public Color getColor() {
         return color;
     }
 
-    public void rotation(Direction direction){
-        System.out.println("dimension, x= "+dimension.x+" y= "+dimension.y);
-        switch (direction){
+    public void rotation(Direction direction) {
+        switch (direction) {
             case DROITE:
-                rorateArray_Clock(cases);
+                rotate_Clockwise();
                 break;
             case GAUCHE:
-                this.cases = rotateCases_CounterClock(cases);
+                rotate_CounterClockwise();
                 break;
             default:
                 break;
@@ -291,46 +406,35 @@ public class Piece implements moveAble {
 
     }
 
-    public Case[][] rotateCases_CounterClock(Case[][] arr){
-        Case[][] rotateArray = new Case[arr[0].length][arr.length];
-        double a = this.dimension.x;
-        this.dimension.x = this.dimension.y;
-        this.dimension.y = a;
-        for(int j=arr.length-1; j>=0; j--){
-            for(int i=0; i<arr[0].length; i++){
-                rotateArray[i][j] = arr[j][i];
-            }
-        }
-        return rotateArray;
+    private void setPositionActive(int i) {
+        for (int j = 0; j < positions.length; j++)
+            positions[j] = false;
+        positionActive = i;
+        if(typePiece == TypePiece.Tetrimino_O)  positionActive =0;
+        positions[positionActive] = true;
     }
 
-    public void rorateArray_Clock(Case[][] arr){
+    public void rotate_Clockwise() {
+        if(typePiece == TypePiece.Tetrimino_I && positionActive ==0)
+            setPositionActive(1);
+        else if (positionActive == 0)
+            setPositionActive(3);
+        else setPositionActive(positionActive - 1);
+    }
 
-        //first change the dimensions vertical length for horizontal length
-        //and viceversa
-        Case[][] newArray = new Case[(int)this.dimension.y][(int)this.dimension.x];
-        int a, b;
-        a = (int)this.dimension.x;
-        b = (int)this.dimension.y;
-        //invert values 90 degrees clockwise by starting from button of
-        //array to top and from left to right
-        for(int i = 0; i<a;i++){
-            for(int j = b-1 ; j>=0;j--){
-                 newArray[j][i]= arr[i][j];
-            }
-        }
-        dimension.set(b,a);
+    public void rotate_CounterClockwise() {
+        if(typePiece == TypePiece.Tetrimino_I && positionActive ==1)
+            setPositionActive(0);
+        else if (positionActive == 3)
+            setPositionActive(0);
+        else setPositionActive(positionActive + 1);
+    }
 
-//        int jj = 0;
-//        for(int j=arr.length-1; j>=0; j--){
-//            int ii = 0;
-//            for(int i=0; i<arr[0].length; i++){
-//                newArray[ii][jj] = arr[i][j];
-//                jj++;
-//            }
-//            ii++;
-//        }
-        arr = null;
-        arr = newArray;
+    public void kill(){
+        this.alive = false;
+    }
+
+    public boolean isAlive() {
+        return alive;
     }
 }

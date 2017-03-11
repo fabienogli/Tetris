@@ -4,6 +4,9 @@ import Controler.PlateauController;
 import Model.Direction;
 import Model.Piece;
 import Model.TypePiece;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -16,6 +19,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.util.Duration;
 
 
 /**
@@ -28,6 +32,7 @@ public class VuePlateau extends Parent{
     private Rectangle fond_plateau;
     private VueGrille vueGrille;
     private PlateauController controller;
+    private Timeline timeline;
 
     /**
      * Constructeur VuePlateau
@@ -147,11 +152,17 @@ public class VuePlateau extends Parent{
     }
 
     public void generatePiece(){
-        controller.getGrilleControler().putPiece(new Piece(TypePiece.Tetrimino_L));
+        controller.getGrilleControler().putPiece(new Piece(TypePiece.Tetrimino_I));
     }
 
     public void startGame(){
         //Generer Piece et la controler
         controller.gestionJeu();
+        timeline = new Timeline(new KeyFrame(
+                Duration.millis(1000),
+                ae->vueGrille.getControler().movePiece(Direction.BAS)
+        ));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
     }
 }
