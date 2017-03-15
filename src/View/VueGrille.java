@@ -3,17 +3,9 @@ package View;
 import Controler.GrilleControler;
 import Model.*;
 import com.sun.javafx.geom.Vec2d;
-import javafx.event.EventHandler;
-import javafx.geometry.Dimension2D;
 import javafx.scene.Parent;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.transform.Rotate;
-
-import java.security.Key;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -118,10 +110,30 @@ public class VueGrille extends Parent implements Observer {
     @Override
     public void update(Observable observable, Object o) {
         this.PieceCourante = (Piece) o;
-        if(PieceCourante.isAlive())
-            affichage_deplacementPiece();
+        affichage_deplacementPiece();
+        if(!PieceCourante.isAlive())
+        {
+            coordoneePrec = null;
+            ligneComplete();
+            controler.putPiece(generateRandomPiece());
+        }
+    }
+
+    public void ligneComplete(){
+            if(grille.controlLigne()){
+                int ligneDelete = grille.getLigneASupprimer();
+                for(int y =ligneDelete-1; y>0; y--){
+                    for(int x =0; x< grille.getX(); x++){
+                        cases[x][y].changerCouleur(cases[x][y-1].getColor());
+                        if( y == 1){
+                            cases[x][0] = new VueCase(grille.getCase(x,0));
+                        }
+                    }
+                }
+            }
 
     }
+
 
     public Boolean erasePiece(Boolean efface, Vec2d dimension){
         for(int i =0; i< casePiecePrec.length;i++){
@@ -137,14 +149,16 @@ public class VueGrille extends Parent implements Observer {
     }
 
     public void displayPiece(Coordonee coordonee, Vec2d dimension){
+        int [][] piece = PieceCourante.getCases();
         for(int x= 0; x< dimension.x;x++){
             for(int y= 0; y< dimension.y;y++){
-                if (PieceCourante.getCase(x,y)!=0){
+                if (piece[y][x]==1){
                     cases[x+coordonee.getX()][y+coordonee.getY()].changerCouleur(PieceCourante.getColor());
                 }
             }
         }
     }
+
     public void affichage_deplacementPiece(){
         Boolean efface = false;
         Coordonee coordonee = PieceCourante.getCoordonee();
@@ -158,33 +172,43 @@ public class VueGrille extends Parent implements Observer {
         coordoneePrec = new Coordonee(coordonee.getX(),coordonee.getY());
     }
 
-    public void rotatePiece(Piece piece, Direction direction){
-        Coordonee coordonee = piece.getCoordonee();
-        Vec2d dimension = piece.getDimension();
-        double pivotX = piece.getPivotX();
-        double pivotY = piece.getPivotY();
-        double angle;
-        switch (direction){
-            case DROITE:
-                angle = 90;
-                break;
-            case GAUCHE:
-                angle = -90;
-                break;
-            default:
-                angle = 0;
-                break;
-        }
-        Rotate rotation = new Rotate(angle, pivotX,pivotY);
-        for(int x= 0; x< dimension.x;x++){
-            for(int y= 0; y< dimension.y;y++){
-                if (piece.getCase(x,y)!=0 ){
-                    cases[x+coordonee.getX()][y+coordonee.getY()].getTransforms().add(rotation);
-                }
-            }
-        }
+    public void generatePiece(){
+        grille.putPiece(generateRandomPiece());
     }
 
+    public Piece generateRandomPiece(){
+        Piece piece;
+        TypePiece typePiece;
+        int r = (int)(Math.random()*(7+1));
+        switch (r){
+            case 0:
+                 typePiece = TypePiece.Tetrimino_I;
+                break;
+            case 1:
+                typePiece = TypePiece.Tetrimino_O;
+                break;
+            case 2:
+                typePiece = TypePiece.Tetrimino_J;
+                break;
+            case 3:
+                typePiece = TypePiece.Tetrimino_L;
+                break;
+            case 4:
+                typePiece = TypePiece.Tetrimino_S;
+                break;
+            case 5:
+                typePiece = TypePiece.Tetrimino_Z;
+                break;
+            case 6:
+                typePiece = TypePiece.Tetrimino_T;
+                break;
+            default:
+                typePiece = TypePiece.Tetrimino_O;
+                break;
+        }
+        piece = new Piece(typePiece);
+        return piece;
+    }
     public Boolean getActif() {
         return actif;
     }

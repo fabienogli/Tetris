@@ -1,8 +1,5 @@
 package Model;
 
-import javafx.scene.Parent;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 /**
  * Created by Fabien on 14/02/2017.

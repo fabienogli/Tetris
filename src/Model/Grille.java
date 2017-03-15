@@ -15,6 +15,7 @@ public class Grille extends Observable {
     private int hauteur;
     private Case[][] cases;
     private static int nbrePiece;
+    private int ligneASupprimer;
 
     /**
      * Constructeur de la grille
@@ -74,7 +75,7 @@ public class Grille extends Observable {
      * @param piece
      */
     public void putPiece(Piece piece){
-        if(!controlCases(piece)){
+        if(controlCases(piece)){
             setChanged();
             notifyObservers(piece);
         }
@@ -86,28 +87,73 @@ public class Grille extends Observable {
      * @param direction
      */
     public void movePiece(Piece piece, Direction direction){
-        piece.move(direction);
-        if(!controlCases(piece)){
-            setChanged();
-            notifyObservers(piece);
-        }
-        else {
-            switch (direction){
-                case GAUCHE:
-                    piece.move(Direction.DROITE);
-                    break;
-                case DROITE:
-                    piece.move(Direction.GAUCHE);
-                    break;
-                case BAS:
-                    piece.move(Direction.Haut);
+            piece.move(direction);
+            if(controlCases(piece)){
+                setChanged();
+                notifyObservers(piece);
             }
-        }
+            else {
+                switch (direction){
+                    case GAUCHE:
+                        piece.move(Direction.DROITE);
+                        break;
+                    case DROITE:
+                        piece.move(Direction.GAUCHE);
+                        break;
+                    case BAS:
+                        piece.move(Direction.Haut);
+                }
+            }
+
+
     }
 
+    /**
+     * Controle si toutes les colonnes des lignes sont occupés.
+     * parcourt de la grille
+     * décale les lignes précédentes la ligne à supprimer d'Y+1
+     * @return
+     */
+    public boolean controlLigne(){
+        boolean verif = false;
+        int ligne = hauteur-1;
+        while(ligne> 0 && !verif){
+            boolean tmp = this.cases[0][ligne].getActif();
+            for (int colonne = 0; colonne < longueur; colonne++) {
+                tmp = this.cases[colonne][ligne].getActif();
+                if(colonne == longueur-1){
+                    if(tmp){
+                        ligneASupprimer = ligne;
+                        verif = true;
+                    }
+                }
+            }
+            ligne--;
+        }
+//        if(verif){
+//            for(int y =ligneASupprimer-1; y>0; y--){
+//                for(int x =0; x< longueur; x++){
+//                    this.cases[x][y] = this.cases[x][y-1];
+//                    this.cases[x][y].setCoordonee(new Coordonee(x,y-1));
+//                    if( y == 1){
+//                        this.cases[x][0] = new Case(new Coordonee(x,0));
+//                    }
+//                }
+//            }
+//        }
+        if(verif)
+        System.out.println(ligneASupprimer);
+        return verif;
+    }
+
+
+    /**
+     * @param piece
+     * @param direction
+     */
     public void rotate_piece(Piece piece, Direction direction){
         piece.rotation(direction);
-        if(!controlCases(piece)){
+        if(controlCases(piece)){
             setChanged();
             notifyObservers(piece);
         }
@@ -125,43 +171,49 @@ public class Grille extends Observable {
         }
     }
 
+    /**
+     * @param piece
+     * @return boolean return
+     */
     public boolean controlCases(Piece piece){
         int[][] pc = piece.getCases();
-//
-
-
         int x = piece.getCoordonee().getX();
         int y= piece.getCoordonee().getY();
         Vec2d dimension = piece.getDimension();
         Boolean fin = false;
-        boolean verif = false;
-        if(!verif){
+        boolean verif = true;
+        if(verif){
             for(int ligne =0; ligne <(int)dimension.x; ligne++){
                 for (int colonne=0; colonne<(int)dimension.y; colonne++){
-                    if(pc[ligne][colonne] ==1){
+                    if(pc[ligne][colonne] ==1) {
+                        if (colonne + x < 0 || colonne + x >= longueur || ligne + y < 0 || ligne + y >= hauteur) {
+                            verif = false;
+                        } else if (ligne + y < hauteur - 1){
+                            if (this.cases[colonne + x][ligne + y + 1].getActif())
+                                fin = true;
+                        }
                         if(ligne+y == hauteur-1)
                             fin= true;
-                        if(colonne+x<0||colonne+x>=longueur||ligne+y<0||ligne+y>=hauteur)
-                            verif = true;
-                        else if(this.cases[colonne+x][ligne+y].getActif()){
-                            verif = true;
-
-                        }
                     }
                 }
             }
         }
-        if(fin){
+        if(fin&&verif){
             for(int ligne =0; ligne <(int)dimension.x; ligne++){
                 for (int colonne=0; colonne<(int)dimension.y; colonne++){
-                    System.out.println("fin");
-                    this.cases[colonne+x][ligne+y].caseActiv();
+                    if(pc[ligne][colonne] ==1)
+                        this.cases[colonne+x][ligne+y].caseActiv();
+                    if(ligne == dimension.x -1 && dimension.y == colonne+1)
+                        piece.kill();
                     }
+
             }
-            piece.kill();
+
         }
         return verif;
     }
 
-
+    public int getLigneASupprimer() {
+        return ligneASupprimer;
+    }
 }

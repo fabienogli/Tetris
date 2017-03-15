@@ -322,6 +322,18 @@ public class Piece implements moveAble {
                                 {0, 0, 0, 0},
                                 {0, 0, 0, 0},
                                 {0, 0, 0, 0}
+                        },
+                        {
+                                {0, 0, 0, 1},
+                                {0, 0, 0, 1},
+                                {0, 0, 0, 1},
+                                {0, 0, 0, 1}
+                        },
+                        {
+                                {0, 0, 0, 0},
+                                {0, 0, 0, 0},
+                                {0, 0, 0, 0},
+                                {1, 1, 1, 1}
                         }
                 }
         ;
@@ -415,17 +427,13 @@ public class Piece implements moveAble {
     }
 
     public void rotate_Clockwise() {
-        if(typePiece == TypePiece.Tetrimino_I && positionActive ==0)
-            setPositionActive(1);
-        else if (positionActive == 0)
+        if (positionActive == 0)
             setPositionActive(3);
         else setPositionActive(positionActive - 1);
     }
 
     public void rotate_CounterClockwise() {
-        if(typePiece == TypePiece.Tetrimino_I && positionActive ==1)
-            setPositionActive(0);
-        else if (positionActive == 3)
+        if (positionActive == 3)
             setPositionActive(0);
         else setPositionActive(positionActive + 1);
     }
