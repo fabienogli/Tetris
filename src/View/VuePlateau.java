@@ -1,7 +1,9 @@
 package View;
 
 import Controler.PlateauController;
+
 import Model.Direction;
+import Model.Piece;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -9,6 +11,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -27,6 +30,7 @@ public class VuePlateau extends Parent{
     private VueGrille vueGrille;
     private PlateauController controller;
     private Timeline timeline;
+    private boolean pause = true;
 
     /**
      * Constructeur VuePlateau
@@ -46,27 +50,50 @@ public class VuePlateau extends Parent{
         controller.setVuePlateau(this);
 
         //Gestion des actions du clavier
+        setControlClavier();
+
+    }
+
+    private void setControlClavier() {
         EventHandler<KeyEvent> handler =new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 switch (event.getCode()){
                     case ENTER:
-                        startGame();
+                        if(pause){
+                            pause = false;
+                            startGame();
+                            timeline.play();
+                        }
                         break;
+                    case P:
+                        if(pause){
+                            timeline.play();
+                            pause = false;
+
+                        }else{
+                            timeline.stop();
+                            pause = true;
+                        }
                     case RIGHT:
-                        controller.getGrilleControler().movePiece(Direction.DROITE);
+                        if(!pause)
+                            controller.getGrilleControler().movePiece(Direction.DROITE);
                         break;
                     case LEFT:
-                        controller.getGrilleControler().movePiece(Direction.GAUCHE);
+                        if(!pause)
+                            controller.getGrilleControler().movePiece(Direction.GAUCHE);
                         break;
                     case DOWN:
-                        controller.getGrilleControler().movePiece(Direction.BAS);
+                        if(!pause)
+                            controller.getGrilleControler().movePiece(Direction.BAS);
                         break;
                     case E:
-                        controller.getGrilleControler().rotatePiece(Direction.DROITE);
+                        if(!pause)
+                            controller.getGrilleControler().rotatePiece(Direction.DROITE);
                         break;
                     case A:
-                        controller.getGrilleControler().rotatePiece(Direction.GAUCHE);
+                        if(!pause)
+                            controller.getGrilleControler().rotatePiece(Direction.GAUCHE);
                         break;
                     default:
                         break;
@@ -83,7 +110,7 @@ public class VuePlateau extends Parent{
         fond_plateau = new Rectangle();
         fond_plateau.setWidth(longueur);
         fond_plateau.setHeight(hauteur);
-        fond_plateau.setFill(Color.DEEPSKYBLUE);
+        fond_plateau.setFill(Color.DIMGREY);
         this.getChildren().add(fond_plateau);
     }
 
@@ -109,9 +136,20 @@ public class VuePlateau extends Parent{
         double YposGrille = longueur/4;
         vueGrille = new VueGrille(XposGrille,YposGrille);
         this.getChildren().add(vueGrille);
-        //Permet de faire fonctionner la gestion du clavier dans la classe VueGrille
-//        vueGrille.setFocusTraversable(true);
+
+        //Ajout prévisualisation de la piece
+        double Xpos, Ypos;
+        Ypos= hauteur/3;
+        Xpos = 3*longueur/4;
+        GridPane gridPane = vueGrille.getPrevisualisationPiece();
+        gridPane.setTranslateX(Xpos);
+        gridPane.setTranslateY(Ypos);
+        this.getChildren().add(gridPane);
+
+        //Ajout score
+        vueGrille.setScorePos(Xpos,Ypos+100);
     }
+
 
     public Text getTitre() {
         return titre;
@@ -146,8 +184,7 @@ public class VuePlateau extends Parent{
     }
 
     public void generatePiece(){
-
-        controller.getGrilleControler().putPiece(vueGrille.generateRandomPiece());
+        controller.getGrilleControler().putPiece(vueGrille.generateRandomPiece(), vueGrille.getCoordoneeDepart());
     }
 
     public void startGame(){
@@ -158,7 +195,6 @@ public class VuePlateau extends Parent{
                 ae->vueGrille.getControler().movePiece(Direction.BAS)
         ));
         timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
     }
 
 }

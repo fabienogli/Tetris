@@ -33,6 +33,7 @@ public class VueCase extends Parent{
 
     public VueCase(Case aCase, Color color){
         this.aCase = aCase;
+        this.color = color;
         this.apparence = new Rectangle(lenght,lenght,color);
         this.apparence.setStroke(Color.BLACK);
 
@@ -40,6 +41,7 @@ public class VueCase extends Parent{
     }
 
     public void changerCouleur(Color color){
+        this.color = color;
         this.apparence.setFill(color);
     }
 

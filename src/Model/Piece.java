@@ -17,7 +17,6 @@ public class Piece implements moveAble {
     private int positionActive;
     private Vec2d dimension;
     private int xpos, ypos;
-    private Color color;
     private int pivotX, PivotY;
 
     /**
@@ -133,7 +132,6 @@ public class Piece implements moveAble {
      * Constructeur du Tetriminos Z
      */
     private void make_Z() {
-        color = Color.RED;
         this.cases = new int[][][]
                 {
                         {
@@ -165,7 +163,6 @@ public class Piece implements moveAble {
      * Constructeur du Tetriminos T
      */
     private void make_T() {
-        color = Color.PURPLE;
         this.cases = new int[][][]
                 {
                         {
@@ -199,7 +196,6 @@ public class Piece implements moveAble {
      * Constructeur du Tetriminos O
      */
     private void make_O() {
-        color = Color.YELLOW;
         this.cases = new int[][][]
                 {
                         {
@@ -214,7 +210,6 @@ public class Piece implements moveAble {
      * Constructeur du Tetriminos S
      */
     private void make_S() {
-        color = Color.LIME;
         this.cases = new int[][][]
                 {
                         {
@@ -246,7 +241,6 @@ public class Piece implements moveAble {
      * Constructeur du Tetriminos L
      */
     private void make_L() {
-        color = Color.ORANGE;
         this.cases = new int[][][]
                 {
                         {
@@ -277,7 +271,6 @@ public class Piece implements moveAble {
      * Constructeur du Tetriminos J
      */
     private void make_J() {
-        color = Color.BLUE;
         this.cases = new int[][][]
                 {
                         {
@@ -308,7 +301,6 @@ public class Piece implements moveAble {
      * Constructeur du Tetriminos I
      */
     private void make_I() {
-        color = Color.CYAN;
         this.cases = new int[][][]
                 {
                         {
@@ -400,9 +392,6 @@ public class Piece implements moveAble {
         return getCases()[j][i];
     }
 
-    public Color getColor() {
-        return color;
-    }
 
     public void rotation(Direction direction) {
         switch (direction) {

@@ -27,9 +27,10 @@ public class GrilleControler {
         return piece;
     }
 
-    public void putPiece(Piece piece){
+    public void putPiece(Piece piece, Coordonee coordonee){
+        grille.putPiece(piece, coordonee);
         this.piece = piece;
-        grille.putPiece(piece);
+        vueGrille.setPieceSuivante(vueGrille.generateRandomPiece());
     }
 
     public void movePiece(Direction direction){
