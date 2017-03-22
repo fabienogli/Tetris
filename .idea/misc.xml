@@ -8,28 +8,28 @@
   </component>
   <component name="UMLDiagramComponent">
     <diagram name="tout">
-      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="Controler.PieceControler" />
-      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="Controler.GrilleControler" />
-      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="Controler.PlateauController" />
-      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="Model.Case" />
-      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="Model.Piece" />
-      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="Model.Grille" />
-      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="Model.moveAble" />
-      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="Model.Coordonee" />
-      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="Model.Direction" />
-      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="Model.TypePiece" />
-      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="Model.PieceFactory" />
-      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="View.TypeJeu" />
-      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="View.VueCase" />
-      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="View.VueGrille" />
-      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="View.VuePlateau" />
+      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="Base.Controler.PieceControler" />
+      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="Base.Controler.GrilleControler" />
+      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="Base.Controler.PlateauController" />
+      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="Base.Model.Case" />
+      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="Base.Model.Piece" />
+      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="Base.Model.Grille" />
+      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="Base.Model.moveAble" />
+      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="Base.Model.Coordonee" />
+      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="Base.Model.Direction" />
+      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="Base.Model.TypePiece" />
+      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="Base.Model.PieceFactory" />
+      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="Base.View.TypeJeu" />
+      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="Base.View.VueCase" />
+      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="Base.View.VueGrille" />
+      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="Base.View.VuePlateau" />
       <compartment-visibility />
     </diagram>
     <diagram name="View">
-      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="View.TypeJeu" />
-      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="View.VueCase" />
-      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="View.VueGrille" />
-      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="View.VuePlateau" />
+      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="Base.View.TypeJeu" />
+      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="Base.View.VueCase" />
+      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="Base.View.VueGrille" />
+      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="Base.View.VuePlateau" />
       <compartment-visibility />
     </diagram>
   </component>

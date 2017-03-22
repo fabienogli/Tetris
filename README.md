@@ -1,3 +1,3 @@
 Tetris 
-Model plutot pas mal
+Base.Model plutot pas mal
 LEs autres bof

@@ -9,7 +9,7 @@
 			"_parent": {
 				"$ref": "AAAAAAFF+h6SjaM2Hec="
 			},
-			"name": "Model",
+			"name": "Base.Model",
 			"ownedElements": [
 				{
 					"_type": "UMLClassDiagram",
@@ -534,7 +534,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "(from Model)",
+											"text": "(from Base.Model)",
 											"horizontalAlignment": 2,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -3304,7 +3304,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "(from Model)",
+											"text": "(from Base.Model)",
 											"horizontalAlignment": 2,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -6192,7 +6192,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "View",
+											"text": "Base.View",
 											"horizontalAlignment": 2,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -6218,7 +6218,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "(from Model)",
+											"text": "(from Base.Model)",
 											"horizontalAlignment": 2,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -6407,7 +6407,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "(from View)",
+											"text": "(from Base.View)",
 											"horizontalAlignment": 2,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -6698,7 +6698,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "(from View)",
+											"text": "(from Base.View)",
 											"horizontalAlignment": 2,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -6989,7 +6989,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "(from View)",
+											"text": "(from Base.View)",
 											"horizontalAlignment": 2,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -8968,7 +8968,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "(from View)",
+											"text": "(from Base.View)",
 											"horizontalAlignment": 2,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -11298,7 +11298,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "View",
+					"name": "Base.View",
 					"ownedElements": [
 						{
 							"_type": "UMLClass",
