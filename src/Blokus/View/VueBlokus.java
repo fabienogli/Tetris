@@ -38,7 +38,6 @@ public class VueBlokus extends VuePlateau{
                         if (pause) {
                             pause = false;
                             startGame();
-                            timeline.play();
                         }
                         break;
                 }

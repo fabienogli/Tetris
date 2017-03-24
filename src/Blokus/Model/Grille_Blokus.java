@@ -2,6 +2,8 @@ package Blokus.Model;
 
 import Base.Model.Grille;
 import Base.Model.Piece;
+import Base.View.VuePiece;
+import javafx.scene.control.ScrollPane;
 
 import java.util.ArrayList;
 
@@ -32,4 +34,7 @@ public class Grille_Blokus extends Grille {
     public Piece getPiece(ArrayList<Piece> deck, int position){
         return deck.get(position);
     }
+
+
+
 }

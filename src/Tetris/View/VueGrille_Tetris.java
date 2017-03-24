@@ -6,16 +6,27 @@ import Tetris.Model.Grille_Tetris;
 import Tetris.Model.Tetriomino;
 import Base.View.VueGrille;
 import Base.View.VuePiece;
+import javafx.scene.layout.GridPane;
 
 /**
  * Created by Fabien on 22/03/2017.
  */
 public class VueGrille_Tetris extends VueGrille {
 
+    private GridPane previsualisationPiece;
+
     public VueGrille_Tetris(double Xpos, double Ypos) {
         super(Xpos, Ypos,4,4);
         //settage de la position de depart
         coordoneeDepart = new Coordonee(4,0);
+
+        //Initialisation de la prévisualisation de la grille
+        previsualisationPiece = makePrevisualisationPiece(4, 4);
+
+        previsualisationPiece.setTranslateX(450);
+        previsualisationPiece.setTranslateY(200);
+        this.getChildren().add(previsualisationPiece);
+
     }
 
     @Override
@@ -23,9 +34,11 @@ public class VueGrille_Tetris extends VueGrille {
         grille = new Grille_Tetris();
     }
 
-
-
-
+    @Override
+    public void setPieceSuivante(Piece pieceSuivante) {
+        super.setPieceSuivante(pieceSuivante);
+        showPieceSuivante(pieceSuivante, previsualisationPiece);
+    }
 
     @Override
     protected VuePiece initiateVuePiece(Piece piece) {
@@ -66,4 +79,7 @@ public class VueGrille_Tetris extends VueGrille {
         }
 
     }
+
+
+
 }

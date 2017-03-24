@@ -17,7 +17,7 @@ import java.util.Observer;
 public class VueGrille extends Parent implements Observer {
     protected final Text _score;
     protected Grille grille;
-    private GridPane gridPane,previsualisationPiece;
+    protected GridPane gridPane,previsualisationPiece;
     protected GrilleControler controler;
     protected VueCase[][] cases,casesPrevisualisation;
     protected Piece PieceCourante,pieceSuivante;
@@ -79,8 +79,7 @@ public class VueGrille extends Parent implements Observer {
         this.gridPane.setTranslateY(Ypos);
 
         //Ajout de la grille
-        //Initialisation de la prévisualisation de la grille
-        makePrevisualisationPiece(xPrev, yPrev);
+
         this.getChildren().add(gridPane);
 
 
@@ -200,7 +199,7 @@ public class VueGrille extends Parent implements Observer {
 
 
 
-    public void showPieceSuivante(Piece piece){
+    public void showPieceSuivante(Piece piece, GridPane previsualisationPiece){
         VuePiece vuePiece = initiateVuePiece(piece);
         for(int x =0; x<previsualisationPiece.getColumnConstraints().size();x++)
             for(int y=0 ; y < previsualisationPiece.getRowConstraints().size();y++){
@@ -215,11 +214,11 @@ public class VueGrille extends Parent implements Observer {
             }
     }
 
-    public void makePrevisualisationPiece(int x, int y){
-        previsualisationPiece = new GridPane();
+    public GridPane makePrevisualisationPiece(int x, int y){
+        GridPane previsualisationPiece = new GridPane();
 
         //Initialisation de la prévisualisation de la piece
-        casesPrevisualisation = new VueCase[x][y];
+        casesPrevisualisation = makecasePrevisu(x,y);
 
         columnConstraint(x, previsualisationPiece);
         rowConstraints(y,previsualisationPiece);
@@ -227,11 +226,22 @@ public class VueGrille extends Parent implements Observer {
 
         for(int i=0; i<x;i++){
             for(int j=0; j<y;j++){
-                casesPrevisualisation[i][j] =new VueCase(new Case(new Coordonee(i,j)),couleur_fond);
                 previsualisationPiece.add(casesPrevisualisation[i][j], i, j);
             }
         }
+        return previsualisationPiece;
 
+    }
+
+    public VueCase[][] makecasePrevisu(int x, int y){
+        //Initialisation de la prévisualisation de la piece
+        VueCase[][] casesPrevisualisation = new VueCase[x][y];
+        for(int i=0; i<x;i++){
+            for(int j=0; j<y;j++){
+                casesPrevisualisation[i][j] =new VueCase(new Case(new Coordonee(i,j)),couleur_fond);
+            }
+        }
+        return casesPrevisualisation;
     }
 
     public GridPane getPrevisualisationPiece(){
@@ -243,7 +253,6 @@ public class VueGrille extends Parent implements Observer {
 
     public void setPieceSuivante(Piece pieceSuivante) {
         this.pieceSuivante = pieceSuivante;
-        showPieceSuivante(pieceSuivante);
     }
 
     public void setScorePos(double x, double y) {

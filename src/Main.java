@@ -11,7 +11,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         primaryStage.setTitle(Tetris_Scene.title);
-        primaryStage.setScene(Tetris_Scene.launchTetris());
+        primaryStage.setScene(Blokus_Scene.launchBlokus());
         primaryStage.show();
     }
 

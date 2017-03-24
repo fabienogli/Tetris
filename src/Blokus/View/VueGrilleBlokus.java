@@ -5,6 +5,7 @@ import Base.View.VueGrille;
 import Base.View.VuePiece;
 import Blokus.Model.BlokusPiece;
 import Blokus.Model.Grille_Blokus;
+import javafx.scene.control.ScrollPane;
 
 import java.util.ArrayList;
 
@@ -13,6 +14,8 @@ import java.util.ArrayList;
  */
 public class VueGrilleBlokus extends VueGrille {
 
+    ScrollPane scrollPane;
+
     private Joueur joueurActif;
     private int nbJoueur;
     private ArrayList<ArrayList<Piece>> decks;
@@ -20,6 +23,7 @@ public class VueGrilleBlokus extends VueGrille {
 
     public VueGrilleBlokus(double Xpos, double Ypos) {
         super(Xpos, Ypos,10,10);
+        setScrollPane();
     }
 
     @Override
@@ -48,5 +52,16 @@ public class VueGrilleBlokus extends VueGrille {
         for(int i=0; i< nbJoueur;i++){
             decks.add(Grille_Blokus.generateDeck());
         }
+    }
+
+    public void setScrollPane(){
+        scrollPane = new ScrollPane();
+        ArrayList<Piece> deck= Grille_Blokus.generateDeck();
+        for(Piece piece : deck){
+            scrollPane.setContent(new VuePiece(piece));
+        }
+        scrollPane.setTranslateY(400);
+        scrollPane.setTranslateY(400);
+        this.getChildren().add(scrollPane);
     }
 }

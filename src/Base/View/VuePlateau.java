@@ -85,10 +85,10 @@ public class VuePlateau extends Parent{
 
         //Ajout prévisualisation de la piece
 
-        GridPane gridPane = vueGrille.getPrevisualisationPiece();
-        gridPane.setTranslateX(Xpos);
-        gridPane.setTranslateY(Ypos);
-        this.getChildren().add(gridPane);
+//        GridPane gridPane = vueGrille.getPrevisualisationPiece();
+//        gridPane.setTranslateX(Xpos);
+//        gridPane.setTranslateY(Ypos);
+//        this.getChildren().add(gridPane);
 
         //Ajout score
         vueGrille.setScorePos(Xpos,Ypos+100);
