@@ -47,6 +47,10 @@ public class GrilleControler {
     public void refreshPiece(Piece piece){
     }
 
+
+    public void lancementGrille(){
+        putPiece(getGrille().generateRandomPiece(),vueGrille.getCoordoneeDepart());
+    }
     public Grille getGrille(){
         return grille;
     }

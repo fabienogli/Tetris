@@ -13,7 +13,7 @@ import Base.View.VuePiece;
 public class VueGrille_Tetris extends VueGrille {
 
     public VueGrille_Tetris(double Xpos, double Ypos) {
-        super(Xpos, Ypos);
+        super(Xpos, Ypos,4,4);
         //settage de la position de depart
         coordoneeDepart = new Coordonee(4,0);
     }

@@ -1,4 +1,5 @@
 
+import Blokus.Blokus_Scene;
 import Tetris.Tetris_Scene;
 import Tetris.View.VueTetris;
 import javafx.application.Application;

@@ -48,7 +48,7 @@ public class PlateauController{
     }
 
     public void generatePiece(){
-        grilleControler.putPiece(grilleControler.getGrille().generateRandomPiece(),vuePlateau.getVueGrille().getCoordoneeDepart());
+        grilleControler.lancementGrille();
     }
     /**
      * @return pieceControler

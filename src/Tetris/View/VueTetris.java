@@ -7,6 +7,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 /**
@@ -15,7 +16,7 @@ import javafx.util.Duration;
 public class VueTetris extends VuePlateau {
 
     public VueTetris() {
-        super("Tetris");
+        super("Tetris",600,600,Color.DIMGREY,450,200);
     }
 
     @Override
@@ -25,6 +26,8 @@ public class VueTetris extends VuePlateau {
         super.initiateGrille();
         vueGrille = new VueGrille_Tetris(XposGrille, YposGrille);
     }
+
+
 
     @Override
     protected void setControlClavier() {

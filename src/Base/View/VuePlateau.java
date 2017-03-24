@@ -31,13 +31,13 @@ public class VuePlateau extends Parent{
     /**
      * Constructeur VuePlateau
      */
-    public VuePlateau(String nomJeu) {
-        //determination de la longueur de la fenêtre
-        longueur = 600;
-        hauteur = 600;
-        creationFond();
+    public VuePlateau(String nomJeu, int longueur, int hauteur, Color couleurFond, int XposPrev, int YposPrev) {
+
+        this.hauteur = hauteur;
+        this.longueur = longueur;
+        creationFond(couleurFond);
         creationTitre(nomJeu);
-        creationGrille();
+        creationGrille(XposPrev, YposPrev);
 
 
         //Gestion du controleur
@@ -57,11 +57,11 @@ public class VuePlateau extends Parent{
     /**
      * Creation du Fond du plateau
      */
-    private void creationFond() {
+    protected void creationFond(Color color) {
         fond_plateau = new Rectangle();
         fond_plateau.setWidth(longueur);
         fond_plateau.setHeight(hauteur);
-        fond_plateau.setFill(Color.DIMGREY);
+        fond_plateau.setFill(color);
         this.getChildren().add(fond_plateau);
     }
 
@@ -79,14 +79,12 @@ public class VuePlateau extends Parent{
     /**
      * Creation de la grille
      */
-    public void creationGrille(){
+    public void creationGrille(double Xpos, double Ypos){
         initiateGrille();
         this.getChildren().add(vueGrille);
 
         //Ajout prévisualisation de la piece
-        double Xpos, Ypos;
-        Ypos= hauteur/3;
-        Xpos = 3*longueur/4;
+
         GridPane gridPane = vueGrille.getPrevisualisationPiece();
         gridPane.setTranslateX(Xpos);
         gridPane.setTranslateY(Ypos);
