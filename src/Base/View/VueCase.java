@@ -12,7 +12,7 @@ public class VueCase extends Parent{
     private Case aCase;
     private Color color;
     private Color[] palette;
-    private Rectangle apparence;
+    protected Rectangle apparence;
     private static int nbCouleur = 6;
 
     public static int getLenght() {
@@ -47,5 +47,9 @@ public class VueCase extends Parent{
 
     public Color getColor() {
         return color;
+    }
+
+    public void eraseStroke(){
+        this.apparence.setStroke(Color.WHITE);
     }
 }

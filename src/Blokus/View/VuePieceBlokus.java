@@ -2,6 +2,7 @@ package Blokus.View;
 
 import Base.Model.Piece;
 import Base.View.VuePiece;
+import Blokus.Model.Joueur;
 import javafx.scene.paint.Color;
 
 /**

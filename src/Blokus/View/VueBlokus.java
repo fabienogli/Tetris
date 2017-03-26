@@ -1,10 +1,15 @@
 package Blokus.View;
 
+import Base.Controler.GrilleControler;
 import Base.Model.Piece;
 import Base.View.VuePlateau;
+import Blokus.Model.TypePiece;
 import Tetris.View.VueGrille_Tetris;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -28,27 +33,25 @@ public class VueBlokus extends VuePlateau{
         vueGrille = new VueGrilleBlokus(XposGrille, YposGrille);
     }
 
-    @Override
-    protected void setControlClavier() {
-        handler = new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                switch (event.getCode()) {
-                    case ENTER:
-                        if (pause) {
-                            pause = false;
-                            startGame();
-                        }
-                        break;
-                }
-            }
-        };
-        super.setControlClavier();
-    }
+//    @Override
+//    protected void setControlClavier() {
+//        GrilleControler grilleControler = controller.getGrilleControler();
+//        handler = new EventHandler<KeyEvent>() {
+//            @Override
+//            public void handle(KeyEvent event) {
+//                switch (event.getCode()) {
+//                    case ENTER:
+//                        grilleControler.putPiece(vueGrille.getPieceSuivante(),vueGrille.getCoordoneeDepart());
+//                        break;
+//                }
+//            }
+//        };
+//        super.setControlClavier();
+//    }
+
 
 
 
     private void startGame() {
-
     }
 }

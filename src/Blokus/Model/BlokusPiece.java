@@ -1,18 +1,21 @@
 package Blokus.Model;
 
 import Base.Model.Piece;
+import Tetris.Model.Type_Piece;
 
 /**
  * Created by Fabien on 22/03/2017.
  */
 public class BlokusPiece extends Piece {
+    protected TypePiece typePiece;
 
     public BlokusPiece() {
         super();
     }
 
-    public BlokusPiece(TypePiece typePiece){
-        this();
+    public BlokusPiece(TypePiece typePiece) {
+        super();
+        this.typePiece = typePiece;
         switch (typePiece) {
             case IS:
                 makeIS();
@@ -78,7 +81,7 @@ public class BlokusPiece extends Piece {
                 make1();
                 break;
         }
-        setCases(cases.length, cases[0].length);
+        setCases(cases[0].length, cases[0].length);
     }
 
     private void makeIS() {
@@ -109,11 +112,13 @@ public class BlokusPiece extends Piece {
                                 {0, 0, 0, 0, 0},
                                 {0, 0, 0, 0, 0},
                                 {0, 0, 0, 0, 0},
+                                {0, 0, 0, 0, 0},
                                 {1, 1, 1, 1, 1}
                         }
                 }
         ;
     }
+
     private void makeN() {
         this.cases = new int[][][]
                 {
@@ -145,7 +150,7 @@ public class BlokusPiece extends Piece {
         ;
     }
 
-    private void makeV5(){
+    private void makeV5() {
         this.cases = new int[][][]
                 {
                         {
@@ -172,35 +177,35 @@ public class BlokusPiece extends Piece {
         ;
     }
 
-    private void makeT5(){
-            this.cases = new int[][][]
-                    {
-                            {
-                                    {1, 1, 1},
-                                    {0, 1, 0},
-                                    {0, 1, 0}
-                            },
-                            {
-                                    {1, 0, 0},
-                                    {1, 1, 1},
-                                    {1, 0, 0}
+    private void makeT5() {
+        this.cases = new int[][][]
+                {
+                        {
+                                {1, 1, 1},
+                                {0, 1, 0},
+                                {0, 1, 0}
+                        },
+                        {
+                                {1, 0, 0},
+                                {1, 1, 1},
+                                {1, 0, 0}
 
-                            },
-                            {
-                                    {0, 1, 0},
-                                    {0, 1, 0},
-                                    {1, 1, 1}
-                            },
-                            {
-                                    {0, 0, 1},
-                                    {1, 1, 1},
-                                    {0, 0, 1}
-                            }
-                    }
-            ;
+                        },
+                        {
+                                {0, 1, 0},
+                                {0, 1, 0},
+                                {1, 1, 1}
+                        },
+                        {
+                                {0, 0, 1},
+                                {1, 1, 1},
+                                {0, 0, 1}
+                        }
+                }
+        ;
     }
 
-    private void makeU(){
+    private void makeU() {
         this.cases = new int[][][]
                 {
                         {
@@ -227,35 +232,35 @@ public class BlokusPiece extends Piece {
         ;
     }
 
-    private void makeL5(){
-            this.cases = new int[][][]
-                    {
-                            {
-                                    {1, 0, 0, 0},
-                                    {1, 0, 0, 0},
-                                    {1, 0, 0, 0},
-                                    {1, 1, 0, 0}
-                            },
-                            {
-                                    {1, 1, 1, 1},
-                                    {1, 0, 0, 0},
-                                    {0, 0, 0, 0},
-                                    {0, 0, 0, 0}
-                            },
-                            {
-                                    {0, 0, 1, 1},
-                                    {0, 0, 0, 1},
-                                    {0, 0, 0, 1},
-                                    {0, 0, 0, 1}
-                            },
-                            {
-                                    {0, 0, 0, 0},
-                                    {0, 0, 0, 0},
-                                    {0, 0, 0, 1},
-                                    {1, 1, 1, 1}
-                            }
-                    }
-            ;
+    private void makeL5() {
+        this.cases = new int[][][]
+                {
+                        {
+                                {1, 0, 0, 0},
+                                {1, 0, 0, 0},
+                                {1, 0, 0, 0},
+                                {1, 1, 0, 0}
+                        },
+                        {
+                                {1, 1, 1, 1},
+                                {1, 0, 0, 0},
+                                {0, 0, 0, 0},
+                                {0, 0, 0, 0}
+                        },
+                        {
+                                {0, 0, 1, 1},
+                                {0, 0, 0, 1},
+                                {0, 0, 0, 1},
+                                {0, 0, 0, 1}
+                        },
+                        {
+                                {0, 0, 0, 0},
+                                {0, 0, 0, 0},
+                                {0, 0, 0, 1},
+                                {1, 1, 1, 1}
+                        }
+                }
+        ;
     }
 
     private void makeY() {
@@ -294,30 +299,30 @@ public class BlokusPiece extends Piece {
         this.cases = new int[][][]
                 {
                         {
-                                {1,0,0,0},
+                                {1, 0, 0},
                                 {1, 1, 1},
                                 {0, 0, 1}
                         },
                         {
-                                {0,1, 1},
-                                {0,1, 0},
-                                {1,1, 0}
+                                {0, 1, 1},
+                                {0, 1, 0},
+                                {1, 1, 0}
                         },
                         {
                                 {1, 0, 0},
                                 {1, 1, 1},
-                                {0,0,1}
+                                {0, 0, 1}
                         },
                         {
-                                {0, 1,1},
-                                {0, 1,0},
-                                {1, 1,0}
+                                {0, 1, 1},
+                                {0, 1, 0},
+                                {1, 1, 0}
                         }
                 }
         ;
     }
 
-    private void makeW(){
+    private void makeW() {
         this.cases = new int[][][]
                 {
                         {
@@ -345,7 +350,7 @@ public class BlokusPiece extends Piece {
         ;
     }
 
-    private void makeP(){
+    private void makeP() {
         this.cases = new int[][][]
                 {
                         {
@@ -372,26 +377,26 @@ public class BlokusPiece extends Piece {
         ;
     }
 
-    private void makeX(){
+    private void makeX() {
         this.cases = new int[][][]
                 {
                         {
-                                {0,1,0},
+                                {0, 1, 0},
                                 {1, 1, 1},
                                 {0, 1, 0}
                         },
                         {
-                                {0,1,0},
+                                {0, 1, 0},
                                 {1, 1, 1},
                                 {0, 1, 0}
                         },
                         {
-                                {0,1,0},
+                                {0, 1, 0},
                                 {1, 1, 1},
                                 {0, 1, 0}
                         },
                         {
-                                {0,1,0},
+                                {0, 1, 0},
                                 {1, 1, 1},
                                 {0, 1, 0}
                         }
@@ -399,34 +404,34 @@ public class BlokusPiece extends Piece {
         ;
     }
 
-    private void makeF(){
-            this.cases = new int[][][]
-                    {
-                            {
-                                    {0,1,0},
-                                    {1, 1, 1},
-                                    {1, 0, 0}
-                            },
-                            {
-                                    {1,1,0},
-                                    {0, 1, 1},
-                                    {0, 1, 0}
-                            },
-                            {
-                                    {0,0,1},
-                                    {1, 1, 1},
-                                    {0, 1, 0}
-                            },
-                            {
-                                    {0,1,0},
-                                    {1, 1, 0},
-                                    {0, 1, 1}
-                            }
-                    }
-            ;
+    private void makeF() {
+        this.cases = new int[][][]
+                {
+                        {
+                                {0, 1, 0},
+                                {1, 1, 1},
+                                {1, 0, 0}
+                        },
+                        {
+                                {1, 1, 0},
+                                {0, 1, 1},
+                                {0, 1, 0}
+                        },
+                        {
+                                {0, 0, 1},
+                                {1, 1, 1},
+                                {0, 1, 0}
+                        },
+                        {
+                                {0, 1, 0},
+                                {1, 1, 0},
+                                {0, 1, 1}
+                        }
+                }
+        ;
     }
 
-    private void makeZ4(){
+    private void makeZ4() {
         this.cases = new int[][][]
                 {
                         {
@@ -659,5 +664,8 @@ public class BlokusPiece extends Piece {
         ;
     }
 
-
+    @Override
+    public Enum getTypePiece() {
+        return typePiece;
+    }
 }

@@ -33,7 +33,7 @@ public class VueGrille extends Parent implements Observer {
         actif = true;
         score = 0;
         //Initialisation de la grille
-        gridPane = new GridPane();
+        this.gridPane = new GridPane();
 
         //Controller de la grille
         controler = new GrilleControler();
@@ -198,6 +198,12 @@ public class VueGrille extends Parent implements Observer {
     }
 
 
+    /**
+     * On tente de faire ce code dans une nouvelle classe
+     * @param
+     * @param
+     * @return
+     */
 
     public void showPieceSuivante(Piece piece, GridPane previsualisationPiece){
         VuePiece vuePiece = initiateVuePiece(piece);
@@ -213,6 +219,8 @@ public class VueGrille extends Parent implements Observer {
                 }
             }
     }
+
+
 
     public GridPane makePrevisualisationPiece(int x, int y){
         GridPane previsualisationPiece = new GridPane();
@@ -233,6 +241,7 @@ public class VueGrille extends Parent implements Observer {
 
     }
 
+
     public VueCase[][] makecasePrevisu(int x, int y){
         //Initialisation de la prévisualisation de la piece
         VueCase[][] casesPrevisualisation = new VueCase[x][y];
@@ -243,6 +252,11 @@ public class VueGrille extends Parent implements Observer {
         }
         return casesPrevisualisation;
     }
+
+    /**
+     * stop
+     * @return
+     */
 
     public GridPane getPrevisualisationPiece(){
         return previsualisationPiece;
@@ -267,5 +281,13 @@ public class VueGrille extends Parent implements Observer {
 
     public Coordonee getCoordoneeDepart() {
         return coordoneeDepart;
+    }
+
+    public Piece getPieceCourante() {
+        return PieceCourante;
+    }
+
+    public Piece getPieceSuivante() {
+        return pieceSuivante;
     }
 }

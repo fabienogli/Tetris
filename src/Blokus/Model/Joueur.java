@@ -1,4 +1,4 @@
-package Blokus.View;
+package Blokus.Model;
 
 /**
  * Created by Fabien on 22/03/2017.

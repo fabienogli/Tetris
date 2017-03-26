@@ -13,6 +13,7 @@ public class Piece implements moveAble {
     private int xpos, ypos;
     private int pivotX, PivotY;
 
+
     public class Vecteur{
         private int x,y;
 
@@ -197,4 +198,34 @@ public class Piece implements moveAble {
     public boolean isAlive() {
         return alive;
     }
+
+    /**
+     * On cherche la coordonée où le premier 1 apparait dans chaque position
+     * Soit le depart de la piece
+     * @return
+     */
+    public Coordonee[] getPosActif(){
+        Coordonee[] coords = new Coordonee[positions.length];
+        for(int i =0; i<positions.length; i++){
+            int [][] cas = cases[i];
+            int x = 0 ,y =0;
+            boolean found = false;
+            while (!found){
+                if(cas[y][x] ==1){
+                    found =true;
+                    coords[i] = new Coordonee(y,x);
+                }
+                else{
+                    y++;
+                    if(y == dimension.getX()){
+                        x++;
+                        y = 0;
+                    }
+                }
+            }
+        }
+        return coords;
+    }
+
+
 }

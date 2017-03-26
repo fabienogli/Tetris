@@ -187,7 +187,7 @@ public class Grille extends Observable {
 
 
     public Boolean controlFin(Piece piece, Direction direction){
-        return null;
+        return false;
     }
 
 

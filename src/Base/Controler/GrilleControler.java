@@ -37,6 +37,7 @@ public class GrilleControler {
     }
 
     public void rotatePiece(Direction direction){
+        System.out.print(piece==null);
         this.grille.rotate_piece(piece, direction);
     }
 
