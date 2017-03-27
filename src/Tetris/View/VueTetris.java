@@ -5,7 +5,10 @@ import Base.View.VuePlateau;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
@@ -15,8 +18,30 @@ import javafx.util.Duration;
  */
 public class VueTetris extends VuePlateau {
 
+    int vitesseDefilement;
+
     public VueTetris() {
         super("Tetris",600,600,Color.DIMGREY,450,200);
+        vitesseDefilement = 1000;
+        Menu lancerPartie = new Menu("Partie");
+        MenuItem start = new MenuItem("Lancer");
+        MenuItem pauseItem = new MenuItem("Pause");
+        start.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                startGame();
+                timeline.play();
+            }
+        });
+        pauseItem.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                pause();
+            }
+        });
+        lancerPartie.getItems().addAll(start,pauseItem);
+        menuBar.getMenus().add(lancerPartie);
+        this.getChildren().add(menuBar);
     }
 
     @Override
@@ -25,6 +50,7 @@ public class VueTetris extends VuePlateau {
         double YposGrille = longueur/4;
         super.initiateGrille();
         vueGrille = new VueGrille_Tetris(XposGrille, YposGrille);
+
     }
 
 
@@ -80,12 +106,21 @@ public class VueTetris extends VuePlateau {
     }
 
     public void startGame(){
+        pause = false;
         //Generer Piece et la controler
         generatePiece();
         timeline = new Timeline(new KeyFrame(
-                Duration.millis(1000),
+                Duration.millis(vitesseDefilement),
                 ae->vueGrille.getControler().movePiece(Direction.BAS)
         ));
         timeline.setCycleCount(Animation.INDEFINITE);
+    }
+
+    public void pause(){
+        pause = !pause;
+    }
+
+    public void acceler(){
+        vitesseDefilement +=1000;
     }
 }

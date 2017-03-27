@@ -6,6 +6,11 @@ import Tetris.Model.Grille_Tetris;
 import Tetris.Model.Tetriomino;
 import Base.View.VueGrille;
 import Base.View.VuePiece;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.GridPane;
 
 /**
@@ -25,6 +30,7 @@ public class VueGrille_Tetris extends VueGrille {
 
         previsualisationPiece.setTranslateX(450);
         previsualisationPiece.setTranslateY(200);
+
         this.getChildren().add(previsualisationPiece);
 
     }
@@ -53,13 +59,22 @@ public class VueGrille_Tetris extends VueGrille {
             this.PieceCourante = piece;
             //initiateVuePieceCourante();
             vuePieceCourante = initiateVuePiece(PieceCourante);
-            affichage_deplacementPiece();
+
             if(!PieceCourante.isAlive())
             {
+                System.out.println("mort");
                 coordoneePrec = null;
                 ligneComplete();
                 controler.putPiece(pieceSuivante, coordoneeDepart);
+            }else {
+                affichage_deplacementPiece();
             }
+        }else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("DOMMAGE");
+            alert.setHeaderText(null);
+            alert.setContentText("VOUS AVEZ PERDU");
+            alert.showAndWait();
         }
     }
 

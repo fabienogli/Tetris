@@ -1,12 +1,14 @@
 package Tetris;
 
 import Tetris.View.VueTetris;
+import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 /**
  * Created by Fabien on 22/03/2017.
  */
-public class Tetris_Scene {
+public class Tetris_App  {
     public static String title = "Tetris";
 
     public static Scene launchTetris(){
@@ -18,4 +20,6 @@ public class Tetris_Scene {
         root.setOnKeyPressed(tetris.getOnKeyPressed());
         return root;
     }
+
+
 }

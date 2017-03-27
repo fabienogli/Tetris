@@ -9,14 +9,18 @@ import Blokus.Model.Grille_Blokus;
 import Blokus.Model.Joueur;
 import Blokus.Model.Player;
 import Blokus.Model.TypePiece;
+import Tetris.Model.Grille_Tetris;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 
@@ -32,6 +36,7 @@ public class VueGrilleBlokus extends VueGrille {
     private int nbJoueur;
     private ArrayList<ArrayList<Piece>> decks;
     private GridPane previsualisationPiece;
+    private Text affichageJoueur;
 
 
     public VueGrilleBlokus(double Xpos, double Ypos) {
@@ -40,12 +45,13 @@ public class VueGrilleBlokus extends VueGrille {
 
         previsualisationPiece = makePrevisualisationPiece(5, 5);
         previsualisationPiece.setTranslateX(10);
-        previsualisationPiece.setTranslateY(20);
+        previsualisationPiece.setTranslateY(40);
         this.getChildren().add(previsualisationPiece);
-        setNbJoueur(1);
-        setJoueurActif(Joueur.JOUEUR1);
         test();
         this.setOnKeyPressed(keyBoard());
+        affichageJoueur = new Text();
+
+
     }
 
     @Override
@@ -66,49 +72,29 @@ public class VueGrilleBlokus extends VueGrille {
 
     @Override
     public void gestionGrille(Piece piece) {
-        PieceCourante = piece;
-        vuePieceCourante = initiateVuePiece(piece);
-        affichage_deplacementPiece();
-    }
+        if(piece.isAlive()){
+            PieceCourante = piece;
+            vuePieceCourante = initiateVuePiece(piece);
+            affichage_deplacementPiece();
+        }else{
+            coordoneePrec = null;
+        }
+        }
 
     public void setNbJoueur(int nbJoueur) {
         this.nbJoueur = nbJoueur;
-        players = new Player[nbJoueur];
-        for (int i = 0; i < nbJoueur; i++) {
-            players[i] = new Player();
-            players[i].setCoordoneeDepart(new Coordonee(0, 0));
+        setJoueurActif(Joueur.JOUEUR1);
+        setAffichageJoueur();
+        affichageJoueur.setTranslateX(400);
+        affichageJoueur.setTranslateY(50);
+        this.getChildren().add(affichageJoueur);
 
-        }
-
-        fillDecks();
+        ((Grille_Blokus)grille).setNbJoueur(nbJoueur);
+        players = ((Grille_Blokus) grille).getPlayers();
     }
 
-    private void fillDecks() {
-        decks = new ArrayList<ArrayList<Piece>>();
-        for (int i = 0; i < nbJoueur; i++) {
-            decks.add(Grille_Blokus.generateDeck());
-        }
-    }
 
-    public void setScrollPane() {
-        scrollPane = new ScrollPane();
-        ArrayList<Piece> deck = Grille_Blokus.generateDeck();
-        VBox vBoxes = new VBox();
-        for (Piece piece : deck) {
-            System.out.println(piece.getTypePiece());
-            vBoxes.getChildren().add(new VuePieceBlokus(piece, joueurActif));
-//            for(int x = 0 ; x< piece.getCases().length;x++){
-//                for(int y =0; y < piece.getCases()[0].length;y++){
-//                    System.out.print(piece.getCase(y,x));
-//                }
-//                System.out.println();
-//            }
-        }
-        scrollPane.setContent(vBoxes);
-        scrollPane.setTranslateY(400);
-        scrollPane.setTranslateY(400);
-        this.getChildren().add(scrollPane);
-    }
+
 
     public void test() {
         GridPane grid = new GridPane();
@@ -124,11 +110,11 @@ public class VueGrilleBlokus extends VueGrille {
             button.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    pieceSuivante = decks.get(joueurActif.ordinal()).get(tp.ordinal());
+
+                    pieceSuivante = ((Grille_Blokus)grille).getPiecefromDeck(joueurActif, tp.ordinal());
                     vuePieceCourante = initiateVuePiece(pieceSuivante);
                     showPieceSuivante(pieceSuivante, previsualisationPiece);
                     //affichage_deplacementPiece();
-                    System.out.println(tp.toString());
                 }
             });
             grid.add(button, colonne, ligne);
@@ -158,26 +144,49 @@ public class VueGrilleBlokus extends VueGrille {
                         break;
                     case A:
                         controler.rotatePiece(Direction.DROITE);
-                        System.out.println("rotation");
                         break;
                     case E:
                         controler.rotatePiece(Direction.GAUCHE);
                         break;
-                    case SPACE:
-                        dropPiece();
+                    case K:
+                        PieceCourante.kill();
+                        grille.controlCases(PieceCourante, null);
+                        switchPlayer();
+                        break;
+                    case UP:
+                        controler.movePiece(Direction.Haut);
+                        break;
+                    case DOWN:
+                        controler.movePiece(Direction.BAS);
+                        break;
+                    case LEFT:
+                        controler.movePiece(Direction.GAUCHE);
+                        break;
+                    case RIGHT:
+                        controler.movePiece(Direction.DROITE);
                         }
             }
         };
         return handler;
     }
 
-    private void dropPiece() {
-        PieceCourante.kill();
-        Coordonee coordonee = players[joueurActif.ordinal()].getCoordoneeDepart();
-        int x = coordonee.getX();
-        int y = coordonee.getY();
-        //switch ()
+
+
+    public void switchPlayer(){
+        int i = joueurActif.ordinal();
+        i++;
+        if(i>=nbJoueur)
+            i =0;
+        joueurActif = Joueur.values()[i];
+        ((Grille_Blokus) grille).changeJoueur(Joueur.values()[i]);
+        setAffichageJoueur();
     }
 
+    public void setAffichageJoueur(){
+        affichageJoueur.setText("Au tour du "+joueurActif+" de jouer !");
+    }
 
+    public Text getAffichageJoueur() {
+        return affichageJoueur;
+    }
 }

@@ -5,9 +5,12 @@ import Base.Model.Piece;
 import Base.View.VuePlateau;
 import Blokus.Model.TypePiece;
 import Tetris.View.VueGrille_Tetris;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -22,15 +25,34 @@ public class VueBlokus extends VuePlateau{
     private int nbJoueur;
 
     public VueBlokus() {
-        super("Blokus",600,600, Color.DIMGREY,10,10);
+        super("Blokus",600,600, Color.DIMGREY,10,40);
+        Menu nbJoueur = new Menu("Lancer Partie");
+        MenuItem Djoueurs = new MenuItem("2 joueurs");
+        MenuItem Qjoueurs = new MenuItem("4 joueurs");
+        nbJoueur.getItems().addAll(Djoueurs, Qjoueurs);
+        Djoueurs.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ((VueGrilleBlokus)vueGrille).setNbJoueur(2);
+            }
+        });
+        Qjoueurs.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ((VueGrilleBlokus)vueGrille).setNbJoueur(4);
+            }
+        });
+        menuBar.getMenus().add(nbJoueur);
+        this.getChildren().add(menuBar);
+
     }
 
     @Override
     protected void initiateGrille() {
         double XposGrille = hauteur/3;
         double YposGrille = longueur/4;
-        super.initiateGrille();
         vueGrille = new VueGrilleBlokus(XposGrille, YposGrille);
+
     }
 
 //    @Override

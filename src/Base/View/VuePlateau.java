@@ -4,14 +4,22 @@ import Base.Controler.PlateauController;
 
 import javafx.animation.Timeline;
 import javafx.event.EventHandler;
+import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.ToolBar;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+
+import javax.swing.text.html.ImageView;
 
 
 /**
@@ -27,6 +35,9 @@ public class VuePlateau extends Parent{
     protected Timeline timeline;
     protected boolean pause = true;
     protected EventHandler<KeyEvent> handler;
+    protected MenuBar menuBar;
+    protected Menu menuPuzzle,menuTetris ,menuBlokus;
+
 
     /**
      * Constructeur VuePlateau
@@ -47,6 +58,12 @@ public class VuePlateau extends Parent{
 
         //Gestion des actions du clavier
         setControlClavier();
+        /**
+         * TEST BAR
+         */
+        menuBar = new MenuBar();
+        menuBar.prefWidthProperty().setValue(longueur);
+
 
     }
 
@@ -59,6 +76,7 @@ public class VuePlateau extends Parent{
      */
     protected void creationFond(Color color) {
         fond_plateau = new Rectangle();
+        fond_plateau.setId("fond");
         fond_plateau.setWidth(longueur);
         fond_plateau.setHeight(hauteur);
         fond_plateau.setFill(color);
@@ -70,7 +88,7 @@ public class VuePlateau extends Parent{
      * @param string String
      */
     public void creationTitre(String string){
-                titre = new Text(hauteur/2-60,50,string);
+                titre = new Text(hauteur/2-60,80,string);
                 titre.setFont(new Font(40));
         this.getChildren().add(titre);
     }

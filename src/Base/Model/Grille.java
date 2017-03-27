@@ -2,6 +2,7 @@ package Base.Model;
 
 
 
+
 import java.util.Observable;
 
 /**
@@ -84,7 +85,8 @@ public class Grille extends Observable {
         }
         else {
             grilleRemplie = true;
-            notifyObservers();
+            setChanged();
+            notifyObservers(piece);
         }
     }
 
@@ -106,6 +108,8 @@ public class Grille extends Observable {
                     break;
                 case BAS:
                     piece.move(Direction.Haut);
+                case Haut:
+                    piece.move(Direction.BAS);
             }
         }
         setChanged();
@@ -139,6 +143,7 @@ public class Grille extends Observable {
                     break;
                 case BAS:
                     piece.rotation(Direction.Haut);
+                    break;
             }
         }
     }
@@ -151,8 +156,9 @@ public class Grille extends Observable {
         boolean verif, fin;
         verif = controlGrille(piece);
         fin = controlFin(piece, direction);
-        if(fin)
+        if(fin){
             stopPiece(piece);
+        }
         return verif;
     }
 

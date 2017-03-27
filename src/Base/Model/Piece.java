@@ -227,5 +227,17 @@ public class Piece implements moveAble {
         return coords;
     }
 
+    public int[][][] getAllCases(){
+        return cases;
+    }
 
+    public void setPositions(int i) {
+        for (int x=0; x<positions.length; x++)
+            this.positions[x] = false;
+        this.positions[i] = true;
+    }
+
+    public void rescucite(){
+        this.alive = true;
+    }
 }
