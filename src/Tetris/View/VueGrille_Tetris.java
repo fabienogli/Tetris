@@ -19,6 +19,7 @@ import javafx.scene.layout.GridPane;
 public class VueGrille_Tetris extends VueGrille {
 
     private GridPane previsualisationPiece;
+    boolean actif = true;
 
     public VueGrille_Tetris(double Xpos, double Ypos) {
         super(Xpos, Ypos,4,4);
@@ -54,6 +55,7 @@ public class VueGrille_Tetris extends VueGrille {
 
     @Override
     public void gestionGrille(Piece piece) {
+
         //Si la grille n'est pas active alors le jeu continue
         if(!grille.isGrilleRemplie()){
             this.PieceCourante = piece;
@@ -62,7 +64,6 @@ public class VueGrille_Tetris extends VueGrille {
 
             if(!PieceCourante.isAlive())
             {
-                System.out.println("mort");
                 coordoneePrec = null;
                 ligneComplete();
                 controler.putPiece(pieceSuivante, coordoneeDepart);
@@ -70,11 +71,14 @@ public class VueGrille_Tetris extends VueGrille {
                 affichage_deplacementPiece();
             }
         }else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("DOMMAGE");
-            alert.setHeaderText(null);
-            alert.setContentText("VOUS AVEZ PERDU");
-            alert.showAndWait();
+            if(actif){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("DOMMAGE");
+                alert.setHeaderText(null);
+                alert.setContentText("VOUS AVEZ PERDU");
+                alert.show();
+                actif = false;
+            }
         }
     }
 

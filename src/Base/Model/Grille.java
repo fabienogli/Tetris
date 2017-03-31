@@ -108,8 +108,12 @@ public class Grille extends Observable {
                     break;
                 case BAS:
                     piece.move(Direction.Haut);
+                    break;
                 case Haut:
                     piece.move(Direction.BAS);
+                    break;
+                default:
+                    break;
             }
         }
         setChanged();
@@ -159,6 +163,7 @@ public class Grille extends Observable {
         if(fin){
             stopPiece(piece);
         }
+
         return verif;
     }
 
@@ -172,9 +177,7 @@ public class Grille extends Observable {
             for (int ligne = 0; ligne < dimension.getX(); ligne++) {
                 for (int colonne = 0; colonne < dimension.getY(); colonne++) {
                     if (pc[ligne][colonne] == 1) {
-                        if (colonne + x < 0 || colonne + x >= longueur || ligne + y < 0) {
-                            verif = false;
-                        } else if (ligne + y >= hauteur) {
+                        if (colonne + x < 0 || colonne + x >= longueur || ligne + y < 0||ligne + y >= hauteur) {
                             verif = false;
                         } else if (this.cases[colonne + x][ligne + y].getActif()) {
                             verif = false;

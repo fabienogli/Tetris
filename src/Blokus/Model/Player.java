@@ -1,7 +1,6 @@
 package Blokus.Model;
 
 import Base.Model.Coordonee;
-import Base.Model.Grille;
 import Base.Model.Piece;
 
 import java.util.ArrayList;
@@ -76,7 +75,7 @@ public class Player {
 
     public void pieceDrop(Piece piece){
         pieceDrop.add(piece);
-        //deck.remove(piece.getTypePiece().ordinal());
+        deck.remove(piece.getTypePiece().ordinal());
     }
 
     public ArrayList<Piece> getDeck() {

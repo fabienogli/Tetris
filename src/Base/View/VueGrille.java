@@ -5,6 +5,8 @@ import Base.Model.*;
 import javafx.scene.Parent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 import java.util.Observable;
@@ -65,7 +67,7 @@ public class VueGrille extends Parent implements Observer {
         gridPane.setGridLinesVisible(true);
 
         //Choix couleur fond
-        couleur_fond = Color.WHITE;
+        couleur_fond = Color.BLACK;
         //Ajout de VueCase dans la grille
         for(int i=0; i<longueur;i++){
             for(int j=0; j<hauteur;j++){
@@ -84,6 +86,8 @@ public class VueGrille extends Parent implements Observer {
 
 
         _score = new Text("Score : " + score);
+        _score.setFill(Color.WHITE);
+        _score.setFont(Font.font(null, FontWeight.BOLD, 30));
         this.getChildren().add(_score);
     }
 
@@ -247,7 +251,9 @@ public class VueGrille extends Parent implements Observer {
         VueCase[][] casesPrevisualisation = new VueCase[x][y];
         for(int i=0; i<x;i++){
             for(int j=0; j<y;j++){
-                casesPrevisualisation[i][j] =new VueCase(new Case(new Coordonee(i,j)),couleur_fond);
+                VueCase vueCase = new VueCase(new Case(new Coordonee(i,j)),couleur_fond);
+                vueCase.eraseStroke();
+                casesPrevisualisation[i][j] =vueCase;
             }
         }
         return casesPrevisualisation;

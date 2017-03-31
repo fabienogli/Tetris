@@ -12,6 +12,12 @@ public class VuePieceBlokus extends VuePiece {
 
     private Joueur joueur;
 
+    /**
+     * Constructeur de la vue d'une piece du blokus
+     * Lui attribue une couleur selon le joueur
+     * @param piece Piece
+     * @param joueur Joueur
+     */
     public VuePieceBlokus(Piece piece, Joueur joueur) {
         super(piece);
         this.joueur = joueur;

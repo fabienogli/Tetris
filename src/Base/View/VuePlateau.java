@@ -12,6 +12,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.ToolBar;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -19,13 +20,11 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-import javax.swing.text.html.ImageView;
-
 
 /**
  * Created by Fabien on 18/02/2017.
  */
-public class VuePlateau extends Parent{
+public class VuePlateau extends Parent {
     protected int longueur;
     protected int hauteur;
     private Text titre;
@@ -36,7 +35,8 @@ public class VuePlateau extends Parent{
     protected boolean pause = true;
     protected EventHandler<KeyEvent> handler;
     protected MenuBar menuBar;
-    protected Menu menuPuzzle,menuTetris ,menuBlokus;
+    protected Menu menuPuzzle, menuTetris, menuBlokus;
+    protected ImageView imageTitre;
 
 
     /**
@@ -64,6 +64,9 @@ public class VuePlateau extends Parent{
         menuBar = new MenuBar();
         menuBar.prefWidthProperty().setValue(longueur);
 
+        setImage(250,30);
+
+
 
     }
 
@@ -75,29 +78,31 @@ public class VuePlateau extends Parent{
      * Creation du Fond du plateau
      */
     protected void creationFond(Color color) {
-        fond_plateau = new Rectangle();
-        fond_plateau.setId("fond");
-        fond_plateau.setWidth(longueur);
-        fond_plateau.setHeight(hauteur);
-        fond_plateau.setFill(color);
-        this.getChildren().add(fond_plateau);
+//        fond_plateau = new Rectangle();
+//        fond_plateau.setId("fond");
+//        fond_plateau.setWidth(longueur);
+//        fond_plateau.setHeight(hauteur);
+//        fond_plateau.setFill(color);
+//        this.getChildren().add(fond_plateau);
+
     }
 
     /**
      * Ajout du titre selon le type de jeu
+     *
      * @param string String
      */
-    public void creationTitre(String string){
-                titre = new Text(hauteur/2-60,80,string);
-                titre.setFont(new Font(40));
-        this.getChildren().add(titre);
+    public void creationTitre(String string) {
+        titre = new Text(hauteur / 2 - 60, 80, string);
+        titre.setFont(new Font(40));
+        //this.getChildren().add(titre);
     }
 
 
     /**
      * Creation de la grille
      */
-    public void creationGrille(double Xpos, double Ypos){
+    public void creationGrille(double Xpos, double Ypos) {
         initiateGrille();
         this.getChildren().add(vueGrille);
 
@@ -109,10 +114,11 @@ public class VuePlateau extends Parent{
 //        this.getChildren().add(gridPane);
 
         //Ajout score
-        vueGrille.setScorePos(Xpos,Ypos+100);
+        vueGrille.setScorePos(Xpos, Ypos + 150);
     }
 
-    protected void initiateGrille() {}
+    protected void initiateGrille() {
+    }
 
 
     public Text getTitre() {
@@ -143,12 +149,19 @@ public class VuePlateau extends Parent{
     /**
      * Ajout d'un element a la grille
      */
-    public void setPiece(Node node){
+    public void setPiece(Node node) {
         this.getChildren().add(node);
     }
 
-    public void generatePiece(){
+    public void generatePiece() {
         controller.generatePiece();
+    }
+
+
+    public void setImage(int xPos, int yPos) {
+        imageTitre.setTranslateX(xPos);
+        imageTitre.setTranslateY(yPos);
+        this.getChildren().add(imageTitre);
     }
 
 

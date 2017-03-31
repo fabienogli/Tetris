@@ -3,6 +3,9 @@ package Tetris.Model;
 import Base.Model.Piece;
 
 /**
+ * Il m a paru plus judicieux d enregistrer les differentes positions de la piece
+ * plutot que de faire translater les vecteurs
+ * C est moins couteux en memoire et en complexite
  * Created by Fabien on 22/03/2017.
  */
 public class Tetriomino extends Piece {
@@ -12,6 +15,10 @@ public class Tetriomino extends Piece {
         super();
     }
 
+    /**
+     * Constructeur d un Tetriomino
+     * @param type_piece Type_Piece du Tetriomino
+     */
     public Tetriomino(Type_Piece type_piece) {
         this();
         this.typePiece = type_piece;
@@ -19,7 +26,7 @@ public class Tetriomino extends Piece {
     }
 
     /**
-     * Creer la piece selon son type
+     * Construit la piece selon son type
      */
     public void setTypePiece() {
         switch (this.typePiece) {

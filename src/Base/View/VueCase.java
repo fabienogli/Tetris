@@ -10,7 +10,7 @@ import javafx.scene.shape.Rectangle;
  */
 public class VueCase extends Parent{
     private Case aCase;
-    private Color color;
+    private Color color, couleurPrecedente;
     private Color[] palette;
     protected Rectangle apparence;
     private static int nbCouleur = 6;
@@ -19,7 +19,7 @@ public class VueCase extends Parent{
         return lenght;
     }
 
-    private static int lenght = 15;
+    private static int lenght = 20;
 
 
 
@@ -35,12 +35,13 @@ public class VueCase extends Parent{
         this.aCase = aCase;
         this.color = color;
         this.apparence = new Rectangle(lenght,lenght,color);
-        this.apparence.setStroke(Color.BLACK);
+        this.apparence.setStroke(Color.WHITE);
 
         this.getChildren().add(this.apparence);
     }
 
     public void changerCouleur(Color color){
+        this.couleurPrecedente = this.color;
         this.color = color;
         this.apparence.setFill(color);
     }
@@ -49,7 +50,15 @@ public class VueCase extends Parent{
         return color;
     }
 
+    public Color getColourPrecedente() {
+        return couleurPrecedente;
+    }
+
+    public void getCoulorBack(){
+        this.color = couleurPrecedente;
+    }
+
     public void eraseStroke(){
-        this.apparence.setStroke(Color.WHITE);
+        this.apparence.setStroke(Color.BLACK);
     }
 }

@@ -11,6 +11,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -34,22 +35,26 @@ public class VueBlokus extends VuePlateau{
             @Override
             public void handle(ActionEvent event) {
                 ((VueGrilleBlokus)vueGrille).setNbJoueur(2);
+                ((VueGrilleBlokus)vueGrille).setActif();
             }
         });
         Qjoueurs.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 ((VueGrilleBlokus)vueGrille).setNbJoueur(4);
+                ((VueGrilleBlokus)vueGrille).setActif();
             }
         });
         menuBar.getMenus().add(nbJoueur);
         this.getChildren().add(menuBar);
+        setImage(250,30);
+
 
     }
 
     @Override
     protected void initiateGrille() {
-        double XposGrille = hauteur/3;
+        double XposGrille = hauteur/3 -20;
         double YposGrille = longueur/4;
         vueGrille = new VueGrilleBlokus(XposGrille, YposGrille);
 
@@ -75,5 +80,13 @@ public class VueBlokus extends VuePlateau{
 
 
     private void startGame() {
+    }
+
+    @Override
+    public void setImage(int xPos, int yPos) {
+        this.imageTitre = new ImageView("/img/Blokus.png");
+        this.imageTitre.setFitHeight(75);
+        this.imageTitre.setFitWidth(95);
+        super.setImage(xPos, yPos);
     }
 }

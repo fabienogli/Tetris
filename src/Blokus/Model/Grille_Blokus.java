@@ -4,8 +4,6 @@ import Base.Model.Coordonee;
 import Base.Model.Direction;
 import Base.Model.Grille;
 import Base.Model.Piece;
-import Base.View.VuePiece;
-import javafx.scene.control.ScrollPane;
 
 import java.util.ArrayList;
 
@@ -18,11 +16,19 @@ public class Grille_Blokus extends Grille {
     private Player[] players;
     int i_playerActif;
 
+    /**
+     * Constructeur de la grille du blokus
+     */
     public Grille_Blokus() {
         super(20, 20);
         pieces = new ArrayList<Piece>();
     }
 
+
+    /**
+     * Generation du Deck avec toutes les pièces
+     * @return ArrayList<Piece> deck
+     */
     public static ArrayList<Piece> generateDeck() {
         ArrayList<Piece> deck = new ArrayList<Piece>();
         for (TypePiece typePiece : TypePiece.values()) {
@@ -32,6 +38,11 @@ public class Grille_Blokus extends Grille {
         return deck;
     }
 
+    /**
+     *
+     * @param deck
+     * @param position
+     */
     public void pieceDrop(ArrayList<Piece> deck, int position) {
         deck.remove(position);
     }
@@ -41,21 +52,6 @@ public class Grille_Blokus extends Grille {
     }
 
     public void putPiece(Piece piece, Coordonee coordonee) {
-//        ArrayList<ArrayList> found = searchCoord(piece);
-//        System.out.println(found.get(1).size());
-//        coordonee = (Coordonee)found.get(0).get(0);
-//        boolean[] positionAllow = (boolean[])found.get(1).get(0);
-//        boolean tmp = false;
-//        int i =0;
-//        while (!tmp){
-//            tmp = positionAllow[i];
-//            i++;
-//        }
-//        piece.setPositions(i);
-//        piece.setCoordonee(coordonee);
-//        System.out.println(piece.getCoordonee());
-//        System.out.println("Dans le put piece "+piece.getTypePiece().toString());
-
         coordonee = coordPerPlayer(piece, i_playerActif);
         super.putPiece(piece, coordonee);
     }
@@ -83,18 +79,11 @@ public class Grille_Blokus extends Grille {
         if(y - 1 < 0)
             verif = true;
         else if(cases[x][y - 1].getActif())
-            bas = false;
+            haut = false;
         verif = bas&haut&gauche&droite;
         return verif;
     }
 
-    public void positionPossible() {
-
-    }
-
-    public Piece getPiece(ArrayList<Piece> deck, int position) {
-        return deck.get(position);
-    }
 
 
 
@@ -110,42 +99,68 @@ public class Grille_Blokus extends Grille {
 
     @Override
     public void stopPiece(Piece piece) {
-        if(controlCaseAround(piece.getCoordonee().getX(), piece.getCoordonee().getY())){
-            piece.kill();
-            players[i_playerActif].pieceDrop(piece);
-            int a =0,b = 0;
+        boolean verif =false;
+        boolean posBonne = false;
+        Joueur joueur = players[i_playerActif].getJoueur();
+        if(players[i_playerActif].getNbPieceDrop() ==0){
+            int x= players[i_playerActif].getCoordoneeDepart().getX();
+            int y= players[i_playerActif].getCoordoneeDepart().getY();
+            for(int i=0; i<piece.getDimension().getX();i++)
+                for(int j=0; j<piece.getDimension().getY();j++){
+                    if(piece.getCase(i,j)==1&& piece.getCoordonee().getX()+i == x && piece.getCoordonee().getY()+j == y ){
+                        verif = true;
+                        posBonne = true;
+                    }
+
+                }
+        }else{
+            verif = true;
+            posBonne = true;
+        }
+
+        int a =0,b = 0;
+
+        for(int x =0; x< piece.getDimension().getX(); x++){
+            for(int y =0; y< piece.getDimension().getY();y++){
+                int abs = piece.getCoordonee().getX()+x;
+                int ord = piece.getCoordonee().getY()+y;
+                if(piece.getCase(x,y) == 1)
+                    posBonne = posBonne&&controlCaseAround(abs, ord);
+            }
+        }
+        if(verif&&posBonne){
+
             for(int x =0 ; x< piece.getDimension().getX();x++){
                 for(int y = 0; y< piece.getDimension().getY(); y++){
                     if(piece.getCase(x,y) == 1){
-                        cases[x][y].caseActiv();
-                        if(players[i_playerActif].getJoueur() == Joueur.JOUEUR1){
+                        cases[x+piece.getCoordonee().getX()][y+piece.getCoordonee().getY()].caseActiv();
+                        if(joueur == Joueur.JOUEUR1 ||joueur == Joueur.JOUEUR3){
                             a= x+1+piece.getCoordonee().getX();
-                            b = y+1+piece.getCoordonee().getY();
+                            if(joueur == Joueur.JOUEUR1)
+                                b = y+1+piece.getCoordonee().getY();
+
                         }
                     }
                 }
             }
-            boolean found = false;
-            switch (players[i_playerActif].getJoueur()) {
-                case JOUEUR2:
-                    while (!found){
-                        for(int x =0 ; x< piece.getDimension().getX();x++) {
-                            for (int y = 0; y < piece.getDimension().getY(); y++) {
-                                if(piece.getCase(x,y) == 1){
-                                    a=piece.getCoordonee().getX() - x;
-                                    b=piece.getCoordonee().getY() - y;
-                                    found =true;
-                                }
-                            }
-                        }
+            if(joueur == Joueur.JOUEUR2||joueur == Joueur.JOUEUR3||joueur ==Joueur.JOUEUR4){
+                int x =0, y =0;
+                while (piece.getCase(x,y) != 1){
+                    y++;
+                    if(y==piece.getDimension().getY()){
+                        x++;
+                        y=0;
                     }
-                    break;
-                case JOUEUR3:
-                    break;
-                case JOUEUR4:
-                    break;
+                }
+                if(joueur == Joueur.JOUEUR4||joueur == Joueur.JOUEUR2)
+                    a=piece.getCoordonee().getX() - x-1;
+                if(joueur == Joueur.JOUEUR3 ||joueur == Joueur.JOUEUR2)
+                    b=piece.getCoordonee().getY() - y-1;
             }
             players[i_playerActif].setCoordoneeDepart(new Coordonee(a,b));
+            players[i_playerActif].dropPiece();
+            //Indice de la piece montré pas bonne
+            //players[i_playerActif].pieceDrop(piece);
             System.out.println(players[i_playerActif].getCoordoneeDepart());
             setChanged();
             notifyObservers(piece);
@@ -287,9 +302,16 @@ public class Grille_Blokus extends Grille {
             r++;
         }
         if(posFound){
-            System.out.println(posFound);
             coordDispo.add(cord);
             positionAllowed.add(tmpPos);
         }
+    }
+
+    public void positionPossible() {
+
+    }
+
+    public Piece getPiece(ArrayList<Piece> deck, int position) {
+        return deck.get(position);
     }
 }

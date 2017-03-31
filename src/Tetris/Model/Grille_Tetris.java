@@ -14,42 +14,26 @@ public class Grille_Tetris extends Grille{
         super(10, 20);
     }
 
+    /**
+     * Genere une piece de Tetris aleatoire
+     * @return
+     */
     @Override
     public Piece generateRandomPiece() {
         Piece piece;
         Type_Piece typePiece;
         int r = (int)(Math.random()*(7));
-        switch (r){
-            case 0:
-                typePiece = Type_Piece.Tetrimino_I;
-                break;
-            case 1:
-                typePiece = Type_Piece.Tetrimino_O;
-                break;
-            case 2:
-                typePiece = Type_Piece.Tetrimino_J;
-                break;
-            case 3:
-                typePiece = Type_Piece.Tetrimino_L;
-                break;
-            case 4:
-                typePiece = Type_Piece.Tetrimino_S;
-                break;
-            case 5:
-                typePiece = Type_Piece.Tetrimino_Z;
-                break;
-            case 6:
-                typePiece = Type_Piece.Tetrimino_T;
-                break;
-            default:
-                typePiece = Type_Piece.Tetrimino_O;
-                break;
-        }
+        typePiece = Type_Piece.values()[r];
         piece = new Tetriomino(typePiece);
         return piece;
     }
 
 
+    /**
+     * @param piece Piece
+     * @param direction Direction
+     * @return Boolean qui determine si la piece doit s arreter
+     */
     @Override
     public Boolean controlFin(Piece piece, Direction direction) {
         int[][] pc = piece.getCases();
@@ -80,11 +64,10 @@ public class Grille_Tetris extends Grille{
     }
 
     /**
-     * Controle si toutes les colonnes des lignes sont occupés.
+     * Controle si toutes les colonnes des lignes sont occupes.
      * parcourt de la grille
-     * décale les lignes précédentes la ligne à supprimer d'Y+1
-     *
-     * @return
+     * decale les lignes precedentes la ligne a supprimer d Y+1
+     * @return Boolean vrai si la ligne doit etre effacer
      */
     @Override
     public Boolean controlLigne() {
@@ -114,18 +97,6 @@ public class Grille_Tetris extends Grille{
                 }
             }
         }
-        /**
-         * Pour débuguer
-         */
-//        for (int x = 0; x < hauteur; x++) {
-//            for (int y = 0; y < longueur; y++) {
-//                if (cases[y][x].getActif())
-//                    System.out.print(1);
-//                else System.out.print(0);
-//            }
-//            System.out.println();
-//        }
-//        System.out.println("---------------------------------");
         return verif;
     }
 

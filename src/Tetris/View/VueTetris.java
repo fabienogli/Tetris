@@ -9,6 +9,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
@@ -21,7 +23,7 @@ public class VueTetris extends VuePlateau {
     int vitesseDefilement;
 
     public VueTetris() {
-        super("Tetris",600,600,Color.DIMGREY,450,200);
+        super("Tetris",600,600,Color.DIMGREY,425,200);
         vitesseDefilement = 1000;
         Menu lancerPartie = new Menu("Partie");
         MenuItem start = new MenuItem("Lancer");
@@ -67,6 +69,7 @@ public class VueTetris extends VuePlateau {
                             startGame();
                             timeline.play();
                         }
+                        acceler();
                         break;
                     case P:
                         if(pause){
@@ -122,5 +125,13 @@ public class VueTetris extends VuePlateau {
 
     public void acceler(){
         vitesseDefilement +=1000;
+    }
+
+    @Override
+    public void setImage(int xPos, int yPos) {
+        this.imageTitre = new ImageView("/img/TetrisLogo.png");
+        this.imageTitre.setFitHeight(75);
+        this.imageTitre.setFitWidth(95);
+        super.setImage(xPos, yPos);
     }
 }
