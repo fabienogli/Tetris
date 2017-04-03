@@ -14,8 +14,8 @@ public class Piece implements moveAble {
     private int pivotX, PivotY;
 
 
-    public class Vecteur{
-        private int x,y;
+    public class Vecteur {
+        private int x, y;
 
         public Vecteur(int x, int y) {
             this.x = x;
@@ -67,13 +67,12 @@ public class Piece implements moveAble {
     }
 
 
-
     public Piece() {
         this.alive = true;
         this.coordonee = new Coordonee();
     }
 
-    public Enum getTypePiece(){
+    public Enum getTypePiece() {
         return null;
     }
 
@@ -87,13 +86,12 @@ public class Piece implements moveAble {
     public void setCases(int xpos, int ypos) {
         this.xpos = xpos;
         this.ypos = ypos;
-        this.dimension = new Vecteur(this.xpos,this.ypos);
+        this.dimension = new Vecteur(this.xpos, this.ypos);
         for (int i = 0; i < positions.length; i++)
             positions[i] = false;
         positionActive = 0;
         positions[0] = true;
     }
-
 
 
     /**
@@ -191,7 +189,7 @@ public class Piece implements moveAble {
         else setPositionActive(positionActive + 1);
     }
 
-    public void kill(){
+    public void kill() {
         this.alive = false;
     }
 
@@ -202,22 +200,22 @@ public class Piece implements moveAble {
     /**
      * On cherche la coordonée où le premier 1 apparait dans chaque position
      * Soit le depart de la piece
+     *
      * @return
      */
-    public Coordonee[] getPosActif(){
+    public Coordonee[] getPosActif() {
         Coordonee[] coords = new Coordonee[positions.length];
-        for(int i =0; i<positions.length; i++){
-            int [][] cas = cases[i];
-            int x = 0 ,y =0;
+        for (int i = 0; i < positions.length; i++) {
+            int[][] cas = cases[i];
+            int x = 0, y = 0;
             boolean found = false;
-            while (!found){
-                if(cas[y][x] ==1){
-                    found =true;
-                    coords[i] = new Coordonee(y,x);
-                }
-                else{
+            while (!found) {
+                if (cas[y][x] == 1) {
+                    found = true;
+                    coords[i] = new Coordonee(y, x);
+                } else {
                     y++;
-                    if(y == dimension.getX()){
+                    if (y == dimension.getX()) {
                         x++;
                         y = 0;
                     }
@@ -227,17 +225,17 @@ public class Piece implements moveAble {
         return coords;
     }
 
-    public int[][][] getAllCases(){
+    public int[][][] getAllCases() {
         return cases;
     }
 
     public void setPositions(int i) {
-        for (int x=0; x<positions.length; x++)
+        for (int x = 0; x < positions.length; x++)
             this.positions[x] = false;
         this.positions[i] = true;
     }
 
-    public void rescucite(){
+    public void rescucite() {
         this.alive = true;
     }
 }

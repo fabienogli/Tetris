@@ -11,7 +11,7 @@ import Base.Model.Piece;
 public class PieceControler {
     private Piece piece;
 
-    public PieceControler(Piece piece){
+    public PieceControler(Piece piece) {
         this.piece = piece;
     }
 
@@ -19,11 +19,11 @@ public class PieceControler {
         return piece;
     }
 
-    public void putPiece(Grille grille){
+    public void putPiece(Grille grille) {
 
     }
 
-    public void movePiece(Direction direction){
+    public void movePiece(Direction direction) {
         piece.move(direction);
     }
 

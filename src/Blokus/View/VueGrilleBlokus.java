@@ -94,6 +94,7 @@ public class VueGrilleBlokus extends VueGrille {
 
     /**
      * Defini le nombre de joueur
+     *
      * @param nbJoueur int
      */
     public void setNbJoueur(int nbJoueur) {
@@ -151,6 +152,7 @@ public class VueGrilleBlokus extends VueGrille {
 
     /**
      * Definit le joueur actif
+     *
      * @param joueurActif Joueur
      */
     public void setJoueurActif(Joueur joueurActif) {
@@ -160,6 +162,7 @@ public class VueGrilleBlokus extends VueGrille {
 
     /**
      * Retourne la gestion du clavier
+     *
      * @return EventHandler<KeyEvent>
      */
     public EventHandler<KeyEvent> keyBoard() {

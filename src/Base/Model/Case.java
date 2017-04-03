@@ -4,7 +4,7 @@ package Base.Model;
 /**
  * Created by Fabien on 14/02/2017.
  */
-public class Case{
+public class Case {
     //Est vrai lorsque une piece est sur une case
     private Boolean actif;
     //Coordonnée de la case dans la grille
@@ -12,6 +12,7 @@ public class Case{
 
     /**
      * Change les coordonnées de la case dans la grille
+     *
      * @param coordonee
      */
     public void setCoordonee(Coordonee coordonee) {
@@ -20,6 +21,7 @@ public class Case{
 
     /**
      * Retourne les coordonnées de la case dans la grille
+     *
      * @return coordonee
      */
     public Coordonee getCoordonee() {
@@ -30,23 +32,24 @@ public class Case{
     /**
      * Constructeur de Case
      */
-    public Case(){
+    public Case() {
         this.actif = false;
         coordonee = new Coordonee();
     }
 
     /**
      * Constructeur de Case
+     *
      * @param coordonee
      */
-    public Case(Coordonee coordonee){
+    public Case(Coordonee coordonee) {
         this.actif = false;
         this.coordonee = coordonee;
     }
 
     //controle si la case suivante est actif ou si ce n'est pas une case (aka la fin de la grille)
-    public Boolean getCaseSuivante(Case case1){
-        if( case1!= null)
+    public Boolean getCaseSuivante(Case case1) {
+        if (case1 != null)
             return case1.getActif();
         else return false;
     }
@@ -54,28 +57,25 @@ public class Case{
     /**
      * rend la case active
      */
-    public void caseActiv(){
+    public void caseActiv() {
         this.actif = true;
     }
 
     /**
      * Rend la case inactive
      */
-    public void caseInactiv(){
+    public void caseInactiv() {
         this.actif = false;
     }
 
     /**
      * Getteur d'actif
+     *
      * @return
      */
     public Boolean getActif() {
         return actif;
     }
-
-
-
-
 
 
 }

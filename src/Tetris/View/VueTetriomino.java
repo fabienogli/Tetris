@@ -11,7 +11,7 @@ public class VueTetriomino extends VuePiece {
 
     public VueTetriomino(Tetriomino piece) {
         super(piece);
-        switch (piece.getTypePiece()){
+        switch (piece.getTypePiece()) {
             case Tetrimino_T:
                 color = Color.PURPLE;
                 break;
@@ -35,5 +35,5 @@ public class VueTetriomino extends VuePiece {
                 break;
         }
 
-        }
+    }
 }

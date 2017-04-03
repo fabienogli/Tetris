@@ -7,7 +7,7 @@ import javafx.animation.Timeline;
 /**
  * Created by Fabien on 21/02/2017.
  */
-public class PlateauController{
+public class PlateauController {
     private GrilleControler grilleControler;
     private PieceControler pieceControler;
     private VuePlateau vuePlateau;
@@ -15,7 +15,7 @@ public class PlateauController{
     private Timeline timeline;
 
 
-    public PlateauController(){
+    public PlateauController() {
         //gestionJeu();
     }
 
@@ -47,9 +47,10 @@ public class PlateauController{
         return grilleControler;
     }
 
-    public void generatePiece(){
+    public void generatePiece() {
         grilleControler.lancementGrille();
     }
+
     /**
      * @return pieceControler
      */

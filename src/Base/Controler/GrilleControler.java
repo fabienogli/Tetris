@@ -19,24 +19,24 @@ public class GrilleControler {
     /**
      * Constructeur de GrilleController
      */
-    public GrilleControler(){
+    public GrilleControler() {
     }
 
     public Piece getPiece() {
         return piece;
     }
 
-    public void putPiece(Piece piece, Coordonee coordonee){
+    public void putPiece(Piece piece, Coordonee coordonee) {
         grille.putPiece(piece, coordonee);
         this.piece = piece;
         vueGrille.setPieceSuivante(grille.generateRandomPiece());
     }
 
-    public void movePiece(Direction direction){
-        grille.movePiece(piece,direction);
+    public void movePiece(Direction direction) {
+        grille.movePiece(piece, direction);
     }
 
-    public void rotatePiece(Direction direction){
+    public void rotatePiece(Direction direction) {
         this.grille.rotate_piece(piece, direction);
     }
 
@@ -44,17 +44,16 @@ public class GrilleControler {
         this.vueGrille = vueGrille;
     }
 
-    public void refreshPiece(Piece piece){
+
+    public void lancementGrille() {
+        putPiece(getGrille().generateRandomPiece(), vueGrille.getCoordoneeDepart());
     }
 
-
-    public void lancementGrille(){
-        putPiece(getGrille().generateRandomPiece(),vueGrille.getCoordoneeDepart());
-    }
-    public Grille getGrille(){
+    public Grille getGrille() {
         return grille;
     }
-    public void setGrille(Grille grille){
+
+    public void setGrille(Grille grille) {
         this.grille = grille;
     }
 

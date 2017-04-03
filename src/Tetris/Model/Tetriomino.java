@@ -17,6 +17,7 @@ public class Tetriomino extends Piece {
 
     /**
      * Constructeur d un Tetriomino
+     *
      * @param type_piece Type_Piece du Tetriomino
      */
     public Tetriomino(Type_Piece type_piece) {
@@ -124,7 +125,6 @@ public class Tetriomino extends Piece {
                 }
         ;
     }
-
 
 
     /**

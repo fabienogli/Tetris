@@ -665,51 +665,51 @@ public class BlokusPiece extends Piece {
         ;
     }
 
-    public Coordonee findCoin(Direction direction){
+    public Coordonee findCoin(Direction direction) {
         int[][] cas = getCases();
-        int x = 0, y =0;
+        int x = 0, y = 0;
         boolean found = false;
         switch (direction) {
             case BAS:
-                for(int i = 0; i<dimension.getX(); i++)
-                    for(int j = 0; j<dimension.getY(); j++){
-                        if(cas[j][i]==1){
+                for (int i = 0; i < dimension.getX(); i++)
+                    for (int j = 0; j < dimension.getY(); j++) {
+                        if (cas[j][i] == 1) {
                             x = i;
                             y = j;
                         }
                     }
                 break;
             case DROITE:
-                for(int i = 0; i<dimension.getX(); i++)
-                    for(int j = 0; j<dimension.getY(); j++){
-                        if(cas[j][i]==1){
-                            if(!found){
-                                y= j;
-                                found =true;
+                for (int i = 0; i < dimension.getX(); i++)
+                    for (int j = 0; j < dimension.getY(); j++) {
+                        if (cas[j][i] == 1) {
+                            if (!found) {
+                                y = j;
+                                found = true;
                             }
                             x = i;
                         }
                     }
                 break;
             case GAUCHE:
-                for(int i = 0; i<dimension.getX(); i++)
-                    for(int j = 0; j<dimension.getY(); j++){
-                        if(cas[j][i]==1){
-                            if(!found){
-                                x= i;
-                                found =true;
+                for (int i = 0; i < dimension.getX(); i++)
+                    for (int j = 0; j < dimension.getY(); j++) {
+                        if (cas[j][i] == 1) {
+                            if (!found) {
+                                x = i;
+                                found = true;
                             }
                             y = j;
                         }
                     }
                 break;
             case Haut:
-                while (!found){
-                    if(cas[y][x] == 1){
-                        found =true;
+                while (!found) {
+                    if (cas[y][x] == 1) {
+                        found = true;
                     }
                     x++;
-                    if(x == dimension.getX()&&!found){
+                    if (x == dimension.getX() && !found) {
                         y++;
                         x = 0;
                     }
@@ -718,8 +718,9 @@ public class BlokusPiece extends Piece {
             default:
                 break;
         }
-        return new Coordonee(getCoordonee().getX()+x, getCoordonee().getY()+y);
+        return new Coordonee(getCoordonee().getX() + x, getCoordonee().getY() + y);
     }
+
     @Override
     public Enum getTypePiece() {
         return typePiece;

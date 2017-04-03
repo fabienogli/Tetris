@@ -5,7 +5,7 @@ import Base.Model.*;
 /**
  * Created by Fabien on 22/03/2017.
  */
-public class Grille_Tetris extends Grille{
+public class Grille_Tetris extends Grille {
 
     protected static int ligneASupprimer;
 
@@ -16,13 +16,14 @@ public class Grille_Tetris extends Grille{
 
     /**
      * Genere une piece de Tetris aleatoire
+     *
      * @return
      */
     @Override
     public Piece generateRandomPiece() {
         Piece piece;
         Type_Piece typePiece;
-        int r = (int)(Math.random()*(7));
+        int r = (int) (Math.random() * (7));
         typePiece = Type_Piece.values()[r];
         piece = new Tetriomino(typePiece);
         return piece;
@@ -30,7 +31,7 @@ public class Grille_Tetris extends Grille{
 
 
     /**
-     * @param piece Piece
+     * @param piece     Piece
      * @param direction Direction
      * @return Boolean qui determine si la piece doit s arreter
      */
@@ -67,6 +68,7 @@ public class Grille_Tetris extends Grille{
      * Controle si toutes les colonnes des lignes sont occupes.
      * parcourt de la grille
      * decale les lignes precedentes la ligne a supprimer d Y+1
+     *
      * @return Boolean vrai si la ligne doit etre effacer
      */
     @Override

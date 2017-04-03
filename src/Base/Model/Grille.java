@@ -1,8 +1,6 @@
 package Base.Model;
 
 
-
-
 import java.util.Observable;
 
 /**
@@ -60,11 +58,11 @@ public class Grille extends Observable {
 
 
     public Case[][] getCases(Piece.Vecteur vec2d) {
-        Case[][] bout_grille = new Case[vec2d.getX()][ vec2d.getY()];
+        Case[][] bout_grille = new Case[vec2d.getX()][vec2d.getY()];
         int i = 0;
         int j = 0;
         for (int ligne = 0; ligne < vec2d.getX(); ligne++) {
-            for (int colonne = 0; colonne <  vec2d.getY(); colonne++) {
+            for (int colonne = 0; colonne < vec2d.getY(); colonne++) {
                 bout_grille[i][j] = cases[ligne][colonne];
             }
         }
@@ -77,13 +75,12 @@ public class Grille extends Observable {
      * @param piece
      */
     public void putPiece(Piece piece, Coordonee coordonee) {
-        Coordonee coordonee1 = new Coordonee(coordonee.getX(),coordonee.getY());
+        Coordonee coordonee1 = new Coordonee(coordonee.getX(), coordonee.getY());
         piece.setCoordonee(coordonee1);
         if (controlCases(piece, null)) {
             setChanged();
             notifyObservers(piece);
-        }
-        else {
+        } else {
             grilleRemplie = true;
             setChanged();
             notifyObservers(piece);
@@ -160,24 +157,24 @@ public class Grille extends Observable {
         boolean verif, fin;
         verif = controlGrille(piece);
         fin = controlFin(piece, direction);
-        if(fin){
+        if (fin) {
             stopPiece(piece);
         }
 
         return verif;
     }
 
-    public Boolean controlGrille(Piece piece){
+    public Boolean controlGrille(Piece piece) {
         int[][] pc = piece.getCases();
         int x = piece.getCoordonee().getX();
         int y = piece.getCoordonee().getY();
         Piece.Vecteur dimension = piece.getDimension();
         Boolean verif = true;
-        if(verif){
+        if (verif) {
             for (int ligne = 0; ligne < dimension.getX(); ligne++) {
                 for (int colonne = 0; colonne < dimension.getY(); colonne++) {
                     if (pc[ligne][colonne] == 1) {
-                        if (colonne + x < 0 || colonne + x >= longueur || ligne + y < 0||ligne + y >= hauteur) {
+                        if (colonne + x < 0 || colonne + x >= longueur || ligne + y < 0 || ligne + y >= hauteur) {
                             verif = false;
                         } else if (this.cases[colonne + x][ligne + y].getActif()) {
                             verif = false;
@@ -195,31 +192,30 @@ public class Grille extends Observable {
     }
 
 
-    public Boolean controlFin(Piece piece, Direction direction){
+    public Boolean controlFin(Piece piece, Direction direction) {
         return false;
     }
 
 
-    public void stopPiece(Piece piece){
+    public void stopPiece(Piece piece) {
         int[][] pc = piece.getCases();
         int x = piece.getCoordonee().getX();
         int y = piece.getCoordonee().getY();
         Piece.Vecteur dimension = piece.getDimension();
-            for (int ligne = 0; ligne < dimension.getX(); ligne++) {
-                for (int colonne = 0; colonne < dimension.getY(); colonne++) {
-                    if (pc[ligne][colonne] == 1)
-                        this.cases[colonne + x][ligne + y - 1].caseActiv();
-                    if (ligne == dimension.getX() - 1 && dimension.getY() == colonne + 1)
-                        piece.kill();
-                }
-
+        for (int ligne = 0; ligne < dimension.getX(); ligne++) {
+            for (int colonne = 0; colonne < dimension.getY(); colonne++) {
+                if (pc[ligne][colonne] == 1)
+                    this.cases[colonne + x][ligne + y - 1].caseActiv();
+                if (ligne == dimension.getX() - 1 && dimension.getY() == colonne + 1)
+                    piece.kill();
             }
+
+        }
     }
 
-    public Piece generateRandomPiece(){
+    public Piece generateRandomPiece() {
         return null;
     }
-
 
 
     public boolean isGrilleRemplie() {

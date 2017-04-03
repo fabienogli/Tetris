@@ -19,10 +19,10 @@ import java.util.Observer;
 public class VueGrille extends Parent implements Observer {
     protected final Text _score;
     protected Grille grille;
-    protected GridPane gridPane,previsualisationPiece;
+    protected GridPane gridPane, previsualisationPiece;
     protected GrilleControler controler;
-    protected VueCase[][] cases,casesPrevisualisation;
-    protected Piece PieceCourante,pieceSuivante;
+    protected VueCase[][] cases, casesPrevisualisation;
+    protected Piece PieceCourante, pieceSuivante;
     protected Coordonee coordoneePrec, coordoneeDepart;
     private int[][] casePiecePrec;
     private Boolean actif;
@@ -30,7 +30,7 @@ public class VueGrille extends Parent implements Observer {
     protected VuePiece vuePieceCourante;
     protected int score;
 
-    public VueGrille(double Xpos, double Ypos, int xPrev, int yPrev){
+    public VueGrille(double Xpos, double Ypos, int xPrev, int yPrev) {
 
         actif = true;
         score = 0;
@@ -42,8 +42,6 @@ public class VueGrille extends Parent implements Observer {
         controler.setVueGrille(this);
 
         initiateGrille();
-
-
 
 
         //Ajout de l'observer
@@ -69,9 +67,9 @@ public class VueGrille extends Parent implements Observer {
         //Choix couleur fond
         couleur_fond = Color.BLACK;
         //Ajout de VueCase dans la grille
-        for(int i=0; i<longueur;i++){
-            for(int j=0; j<hauteur;j++){
-                cases[i][j] =new VueCase(grille.getCase(i,j),couleur_fond);
+        for (int i = 0; i < longueur; i++) {
+            for (int j = 0; j < hauteur; j++) {
+                cases[i][j] = new VueCase(grille.getCase(i, j), couleur_fond);
                 gridPane.add(cases[i][j], i, j);
             }
         }
@@ -91,15 +89,17 @@ public class VueGrille extends Parent implements Observer {
         this.getChildren().add(_score);
     }
 
-    protected void initiateGrille() {}
+    protected void initiateGrille() {
+    }
 
     /**
      * Definit les contraintes des lignes
-     * @param hauteur int (axe y)
+     *
+     * @param hauteur  int (axe y)
      * @param gridPane Gridpane (grille)
      */
-    public static void rowConstraints(int hauteur, GridPane gridPane){
-        for(int i=0; i<hauteur; i++){
+    public static void rowConstraints(int hauteur, GridPane gridPane) {
+        for (int i = 0; i < hauteur; i++) {
             RowConstraints rowConstraints = new RowConstraints(VueCase.getLenght());
             rowConstraints.setFillHeight(true);
             rowConstraints.setVgrow(Priority.ALWAYS);
@@ -110,11 +110,12 @@ public class VueGrille extends Parent implements Observer {
 
     /**
      * Définit les contraintes des colonnes
+     *
      * @param longueur int (axe x)
      * @param gridPane Gridpane (grille)
      */
-    public static void columnConstraint(int longueur,  GridPane gridPane){
-        for(int j =0; j<longueur ;j++){
+    public static void columnConstraint(int longueur, GridPane gridPane) {
+        for (int j = 0; j < longueur; j++) {
             ColumnConstraints columnConstraints = new ColumnConstraints(VueCase.getLenght());
             columnConstraints.setFillWidth(true);
             columnConstraints.setHgrow(Priority.ALWAYS);
@@ -155,89 +156,85 @@ public class VueGrille extends Parent implements Observer {
     }
 
 
-    public void gestionGrille(Piece piece){
+    public void gestionGrille(Piece piece) {
 
     }
 
 
-
-
-
-
-    public Boolean erasePiece(Boolean efface, Piece.Vecteur dimension){
-        for(int i =0; i< casePiecePrec.length;i++){
-            for(int j =0; j<casePiecePrec[0].length;j++){
+    public Boolean erasePiece(Boolean efface, Piece.Vecteur dimension) {
+        for (int i = 0; i < casePiecePrec.length; i++) {
+            for (int j = 0; j < casePiecePrec[0].length; j++) {
                 //Efface la piece à la position précédente
-                if(casePiecePrec[j][i]==1)
-                    cases[i+coordoneePrec.getX()][j+coordoneePrec.getY()].changerCouleur(couleur_fond);
+                if (casePiecePrec[j][i] == 1)
+                    cases[i + coordoneePrec.getX()][j + coordoneePrec.getY()].changerCouleur(couleur_fond);
             }
-            if(i== dimension.getX()-1)
+            if (i == dimension.getX() - 1)
                 efface = true;
         }
         return efface;
     }
 
-    public void displayPiece(Coordonee coordonee, Piece.Vecteur dimension){
-        int [][] piece = PieceCourante.getCases();
-        for(int x= 0; x< dimension.getX();x++){
-            for(int y= 0; y< dimension.getY();y++){
-                if (piece[y][x]==1){
-                    cases[x+coordonee.getX()][y+coordonee.getY()].changerCouleur(vuePieceCourante.getColor());
+    public void displayPiece(Coordonee coordonee, Piece.Vecteur dimension) {
+        int[][] piece = PieceCourante.getCases();
+        for (int x = 0; x < dimension.getX(); x++) {
+            for (int y = 0; y < dimension.getY(); y++) {
+                if (piece[y][x] == 1) {
+                    cases[x + coordonee.getX()][y + coordonee.getY()].changerCouleur(vuePieceCourante.getColor());
                 }
             }
         }
     }
 
-    public void affichage_deplacementPiece(){
+    public void affichage_deplacementPiece() {
         Boolean efface = false;
         Coordonee coordonee = PieceCourante.getCoordonee();
         Piece.Vecteur dimension = PieceCourante.getDimension();
-        if(coordoneePrec != null){
+        if (coordoneePrec != null) {
             while (!efface)
-                efface = erasePiece(efface,dimension);
+                efface = erasePiece(efface, dimension);
         }
-        displayPiece(coordonee,dimension);
+        displayPiece(coordonee, dimension);
         casePiecePrec = PieceCourante.getCases();
-        coordoneePrec = new Coordonee(coordonee.getX(),coordonee.getY());
+        coordoneePrec = new Coordonee(coordonee.getX(), coordonee.getY());
     }
 
 
     /**
      * On tente de faire ce code dans une nouvelle classe
+     *
      * @param
      * @param
      * @return
      */
 
-    public void showPieceSuivante(Piece piece, GridPane previsualisationPiece){
+    public void showPieceSuivante(Piece piece, GridPane previsualisationPiece) {
         VuePiece vuePiece = initiateVuePiece(piece);
-        for(int x =0; x<previsualisationPiece.getColumnConstraints().size();x++)
-            for(int y=0 ; y < previsualisationPiece.getRowConstraints().size();y++){
-                if(y>=piece.getDimension().getY()||x>=piece.getDimension().getX())    casesPrevisualisation[x][y].changerCouleur(couleur_fond);
+        for (int x = 0; x < previsualisationPiece.getColumnConstraints().size(); x++)
+            for (int y = 0; y < previsualisationPiece.getRowConstraints().size(); y++) {
+                if (y >= piece.getDimension().getY() || x >= piece.getDimension().getX())
+                    casesPrevisualisation[x][y].changerCouleur(couleur_fond);
                 else {
-                    if(piece.getCase(x,y)==1){
+                    if (piece.getCase(x, y) == 1) {
                         casesPrevisualisation[x][y].changerCouleur(vuePiece.getColor());
-                    }
-                    else
+                    } else
                         casesPrevisualisation[x][y].changerCouleur(couleur_fond);
                 }
             }
     }
 
 
-
-    public GridPane makePrevisualisationPiece(int x, int y){
+    public GridPane makePrevisualisationPiece(int x, int y) {
         GridPane previsualisationPiece = new GridPane();
 
         //Initialisation de la prévisualisation de la piece
-        casesPrevisualisation = makecasePrevisu(x,y);
+        casesPrevisualisation = makecasePrevisu(x, y);
 
         columnConstraint(x, previsualisationPiece);
-        rowConstraints(y,previsualisationPiece);
+        rowConstraints(y, previsualisationPiece);
 
 
-        for(int i=0; i<x;i++){
-            for(int j=0; j<y;j++){
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
                 previsualisationPiece.add(casesPrevisualisation[i][j], i, j);
             }
         }
@@ -246,14 +243,14 @@ public class VueGrille extends Parent implements Observer {
     }
 
 
-    public VueCase[][] makecasePrevisu(int x, int y){
+    public VueCase[][] makecasePrevisu(int x, int y) {
         //Initialisation de la prévisualisation de la piece
         VueCase[][] casesPrevisualisation = new VueCase[x][y];
-        for(int i=0; i<x;i++){
-            for(int j=0; j<y;j++){
-                VueCase vueCase = new VueCase(new Case(new Coordonee(i,j)),couleur_fond);
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+                VueCase vueCase = new VueCase(new Case(new Coordonee(i, j)), couleur_fond);
                 vueCase.eraseStroke();
-                casesPrevisualisation[i][j] =vueCase;
+                casesPrevisualisation[i][j] = vueCase;
             }
         }
         return casesPrevisualisation;
@@ -261,12 +258,14 @@ public class VueGrille extends Parent implements Observer {
 
     /**
      * stop
+     *
      * @return
      */
 
-    public GridPane getPrevisualisationPiece(){
+    public GridPane getPrevisualisationPiece() {
         return previsualisationPiece;
     }
+
     public Boolean getActif() {
         return actif;
     }
@@ -282,7 +281,7 @@ public class VueGrille extends Parent implements Observer {
 
     public void setScore(int score) {
         this.score = score;
-        _score.setText("Score : "+score);
+        _score.setText("Score : " + score);
     }
 
     public Coordonee getCoordoneeDepart() {

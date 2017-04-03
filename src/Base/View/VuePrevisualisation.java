@@ -16,7 +16,7 @@ public class VuePrevisualisation extends Parent {
     protected GridPane gridPane;
     protected Color color;
 
-    public VuePrevisualisation(Piece piece, Color color){
+    public VuePrevisualisation(Piece piece, Color color) {
         this.color = color;
         this.piece = piece;
         gridPane = new GridPane();
@@ -24,18 +24,18 @@ public class VuePrevisualisation extends Parent {
         VueCase[][] cases = makecasePrevisu(piece, color);
 
         VueGrille.columnConstraint(piece.getDimension().getX(), gridPane);
-        VueGrille.rowConstraints(piece.getDimension().getY(),gridPane);
+        VueGrille.rowConstraints(piece.getDimension().getY(), gridPane);
 
         VuePiece vuePiece = intiateVuePiece(piece);
 
-        for(int x =0; x<gridPane.getColumnConstraints().size();x++)
-            for(int y=0 ; y < gridPane.getRowConstraints().size();y++){
-                if(y>=piece.getDimension().getY()||x>=piece.getDimension().getX())    cases[x][y].changerCouleur(color);
+        for (int x = 0; x < gridPane.getColumnConstraints().size(); x++)
+            for (int y = 0; y < gridPane.getRowConstraints().size(); y++) {
+                if (y >= piece.getDimension().getY() || x >= piece.getDimension().getX())
+                    cases[x][y].changerCouleur(color);
                 else {
-                    if(piece.getCase(x,y)==1){
+                    if (piece.getCase(x, y) == 1) {
                         cases[x][y].changerCouleur(vuePiece.getColor());
-                    }
-                    else
+                    } else
                         cases[x][y].changerCouleur(color);
                 }
             }
@@ -46,14 +46,14 @@ public class VuePrevisualisation extends Parent {
         return null;
     }
 
-    public VueCase[][] makecasePrevisu(Piece piece, Color color){
+    public VueCase[][] makecasePrevisu(Piece piece, Color color) {
         //Initialisation de la prévisualisation de la piece
-        int x =piece.getDimension().getX();
+        int x = piece.getDimension().getX();
         int y = piece.getDimension().getY();
         VueCase[][] cases = new VueCase[x][y];
-        for(int i=0; i<x;i++){
-            for(int j=0; j<y;j++){
-                VueCase vueCase = new VueCase(new Case(new Coordonee(i,j)), color );
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+                VueCase vueCase = new VueCase(new Case(new Coordonee(i, j)), color);
                 vueCase.eraseStroke();
                 cases[i][j] = vueCase;
             }

@@ -19,6 +19,6 @@ public class nextPiece extends VuePrevisualisation {
 
     @Override
     protected VuePiece intiateVuePiece(Piece piece) {
-        return new VueTetriomino((Tetriomino)piece);
+        return new VueTetriomino((Tetriomino) piece);
     }
 }

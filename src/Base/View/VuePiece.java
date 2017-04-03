@@ -11,12 +11,15 @@ import javafx.scene.paint.Color;
 public class VuePiece extends Parent {
     protected Color color;
     protected Piece piece;
+
     /**
      * Constructeur VuePiece
      *
      * @param piece Piece
      */
-    public VuePiece(Piece piece) { this.piece = piece;}
+    public VuePiece(Piece piece) {
+        this.piece = piece;
+    }
 
     public Color getColor() {
         return color;
